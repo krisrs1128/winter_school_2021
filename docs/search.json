@@ -1,0 +1,21 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "Description",
+      "description": "Notes for Day 2 morning session.",
+      "author": [],
+      "contents": "\nThis site contains materials for this session. You can also go directly to all the videos, discussions, or notebooks.\n\n\n\n",
+      "last_modified": "2021-12-15T14:35:05-06:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Foundations for ML and Neural Networks",
+      "description": "Notes for the morning session for day 2 of NAAMII's Winter School on AI.\n",
+      "author": [],
+      "contents": "\nLearning Outcomes\nMachine Learning Foundations\nGiven a problem description, determine features that may be relevant, including those directly present in the raw data and those that must be constructed.\nGiven a problem description, determine an appropriate response variable.\nDesign a model evaluation scheme for a specific problem / model context, keeping in mind the dangers of overfitting and the bias-variance trade-off.\nGiven a covariate / response pair, use visualization and summary statistics to identify preprocessing or transformation methods that may improve downstream model performance.\nDiscuss the relative merits of linear, sparse, and tree-based methods in a particular problem setting, and prepare code that implements them appropriately.\nUse model summaries and data visualization to summarize the important features in a model and note areas for potential improvement.\nNeural Networks Foundations\nGiven a numeric covariate matrix and response variable, use pytorch to train a nonlinear regressor that minimizes L2 loss.\nGiven a collection of PNG files and class labels, use pytorch to train an image classifier and produce predicted labels for a new unlabeled set.\nSketch the relationships between and the roles of different components of a deep learning workflow, including the dataloader, the model, the optimizer, the loss function, and inference routines.\nBe able to explain the mechanics of backpropagation and relate it to the overall process of training deep learning models.\nGiven a contextual problem description, discuss the relative merits of deep vs. non-deep learning methods.\nEvaluate the relative value of using pretrained weights, and being able to apply them in an original problem context.\nOutline\n\n\n\n",
+      "last_modified": "2021-12-15T14:35:05-06:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}
