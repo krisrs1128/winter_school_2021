@@ -1,7 +1,5 @@
 name: "winter_school_2021"
-title: "NAAMII Winter School 2021 - Foundations for ML and Neural Networks"
-description: |
-  NAAMII Winter School 2021 - Foundations for ML and Neural Networks
+title: "NAAMII Winter School 2021 - Foundations for Machine Learning"
 output_dir: "docs"
 navbar:
   right:
