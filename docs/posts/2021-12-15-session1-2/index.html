@@ -86,7 +86,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-<title>NAAMII Winter School 2021 - Foundations for ML and Neural Networks: Setting Up Supervised Learning Probems</title>
+<title>NAAMII Winter School 2021 - Foundations for ML and Neural Networks: Preprocessing and Featurization</title>
 
 
 
@@ -96,25 +96,25 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta name="article:author" content="Kris Sankaran"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="NAAMII Winter School 2021 - Foundations for ML and Neural Networks: Setting Up Supervised Learning Probems"/>
+<meta property="og:title" content="NAAMII Winter School 2021 - Foundations for ML and Neural Networks: Preprocessing and Featurization"/>
 <meta property="og:type" content="article"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="NAAMII Winter School 2021 - Foundations for ML and Neural Networks"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="NAAMII Winter School 2021 - Foundations for ML and Neural Networks: Setting Up Supervised Learning Probems"/>
+<meta property="twitter:title" content="NAAMII Winter School 2021 - Foundations for ML and Neural Networks: Preprocessing and Featurization"/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","output","date"]}},"value":[{"type":"character","attributes":{},"value":["Setting Up Supervised Learning Probems"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Kris Sankaran"]},{"type":"character","attributes":{},"value":["https://krisrs1128.github.com/LSLab"]},{"type":"character","attributes":{},"value":["UW Madison"]},{"type":"character","attributes":{},"value":["https://stat.wisc.edu"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["12-15-2021"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","output","date"]}},"value":[{"type":"character","attributes":{},"value":["Preprocessing and Featurization"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Kris Sankaran"]},{"type":"character","attributes":{},"value":["https://krisrs1128.github.com/LSLab"]},{"type":"character","attributes":{},"value":["UW Madison"]},{"type":"character","attributes":{},"value":["https://stat.wisc.edu"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["12-15-2021"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/header-attrs-2.8/header-attrs.js","welcome_files/jquery-1.11.3/jquery.min.js","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"NULL"}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2059,7 +2059,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Setting Up Supervised Learning Probems","authors":[{"author":"Kris Sankaran","authorURL":"https://krisrs1128.github.com/LSLab","affiliation":"UW Madison","affiliationURL":"https://stat.wisc.edu","orcidID":""}],"publishedDate":"2021-12-15T00:00:00.000+00:00","citationText":"Sankaran, 2021"}
+{"title":"Preprocessing and Featurization","authors":[{"author":"Kris Sankaran","authorURL":"https://krisrs1128.github.com/LSLab","affiliation":"UW Madison","affiliationURL":"https://stat.wisc.edu","orcidID":""}],"publishedDate":"2021-12-15T00:00:00.000+00:00","citationText":"Sankaran, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2082,7 +2082,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Setting Up Supervised Learning Probems</h1>
+<h1>Preprocessing and Featurization</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
 
@@ -2096,131 +2096,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="d-article">
 <ol type="1">
-<li><p>We are making predictions all the time, often without realizing it. For example, imagine we are waiting at a bus stop and want to guess how long it will be before a bus arrives. We can combine many sources of evidence,</p>
-<ul>
-<li>How many people are currently at the stop? If there are more people, we think a bus might arrive soon.</li>
-<li>What time of day is it? If it’s during rush hour, we would expect more frequent service.</li>
-<li>What is the weather like? If it is poor weather, we might expect delays.</li>
-<li>etc.</li>
-</ul>
-<p>To think about the process formally, we could imagine a vector <span class="math inline">\(x_i \in \mathbb{R}^{D}\)</span> reflecting <span class="math inline">\(D\)</span> characteristics of our environment. If we collected data about how long we actually had to wait, call it <span class="math inline">\(y_i\)</span>, for every day in a year, then we would have a dataset <span class="math display">\[\begin{align*}
-\left(x_1, y_1\right) \\
-\left(x_2, y_2\right) \\
-\vdots \\
-\left(x_{365}, y_{365}\right) \\
-\end{align*}\]</span> and we could try to summarize the relationship <span class="math inline">\(x_i \to y_i\)</span>. Methods for making this process automatic, based simply on a training dataset, are called supervised learning methods.</p></li>
-<li><p>In the above example, the inputs were a mix of counts (number of people at stop?) and categorical (weather) data types, and our response was a nonnegative continuous value. In general, we could have arbitrary data types for either input or response variable. A few types of outputs are so common that they come with their own names,</p>
-<ul>
-<li><span class="math inline">\(y_i\)</span> continuous <span class="math inline">\(\to\)</span> regression</li>
-<li><span class="math inline">\(y_i\)</span> categorical <span class="math inline">\(\to\)</span> classification</li>
-</ul>
-<p>For example, trying to determine whether a patient’s disease will be cured by a treatment is a classification problem – the outcomes are either yes, they will be cured, or no, they won’t. Trying to estimate the crop yield of a plot of farmland based on a satellite image is a regression problem – it could be any continuous, nonnegative number. There are in fact many other types of responses (ordinal, multiresponse, survival, functional, image-to-image, …) each which come with their own names and set of methods, but for our purposes, it’s enough to focus on regression and classification.</p></li>
-<li><p>There is a nice geometric way of thinking about supervised learning. For regression, think of the inputs on the <span class="math inline">\(x\)</span>-axis and the response on the <span class="math inline">\(y\)</span>-axis. Regression then becomes the problem of estimating a one-dimensional curve from data.</p>
-<p>In higher-dimensions, this becomes a surface.</p>
-<p>If some of the inputs are categorical (e.g., poor vs. good weather), then the regression function is no longer a continuous curve, but we can still identify group means.</p></li>
-<li><p>Classification has a similar geometric interpretation, except instead of a continuous response, we have categorical labels. We can associate classes with colors. If we have only one input, classification is the problem of learning which regions of the input are associated with certain colors.</p>
-<p>In higher-dimensions, the view is analogous. We just want to find boundaries between regions with clearly distinct colors. For example, for disease recurrence, blood pressure and resting heart rate might be enough to make a good guess about whether a patient will have recurrence or not.</p></li>
+<li><p>A few simple improvements to the quality of a dataset can make a much bigger impact in downstream modeling performance than even the most extensive search across the fanciest models. For this reason, in real-world modeling (not to mention competitions), significant time is dedicated to data exploration and preprocessing<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In these notes, we’ll review some of the most common changes we can make to a dataset before we feed it into a model.</p></li>
+<li><p>First, a caveat: Never overwrite the raw data! Instead, write a workflow that transforms the raw data into preprocessed data. This makes it possible to try a few different transformations and see how the resulting performances compare. Also, we want to have some confidence that the overall analysis is reproducible, and if we make irreversible changes to the raw data, then we lose all chance at that.</p></li>
 </ol>
-<h3 id="model-classes">Model Classes</h3>
-<ol start="5" type="1">
-<li>Drawing curves and boundaries sounds simple, but is a surprisingly difficult problem, especially when the number of potentially informative features <span class="math inline">\(D\)</span> is large. It helps to have predefined types of curves (and boundaries) that we can refer to and use to partially automate the process of supervised learning. We’ll call an example of these predefined curve types a “model class.” In later notes, we’ll discuss how exactly to choose one member of each model class that fits a dataset well. For now, let’s just build some intuition about what each model class looks like and how we might be able to fit it with data.</li>
+<h3 id="preprocessing">Preprocessing</h3>
+<ol start="3" type="1">
+<li>Outliers: A single point very far away from the rest can result in poor fits. For example, when fitting a linear regression, the whole line can be thrown off by one point,</li>
 </ol>
-<h4 id="linear-models">Linear Models</h4>
+<p>(picture)</p>
+<p>There are <a href="https://www.researchgate.net/profile/Vipin-Kumar-54/publication/242403027_Outlier_Detection_A_Survey/links/0deec52d83600bb86c000000/Outlier-Detection-A-Survey.pdf">many approaches</a> to detecting outliers. However, a simple rule of thumb is to compute the interquartile range for each feature (the difference between the 75% and 25% percentiles). Look for points that are more than 1.5 or 2 times this range away from the median. They are potential outliers.</p>
+<ol start="4" type="1">
+<li><p>Differences in scales: Sparse regression is sensitive to the units used to train them (so is deep learning). For example, this means that changing the units of a certain input from meters to millimeters will have a major influence on the fitted model. To address this issue, it is common to try rescaling each variable. For example, subtracting the mean and dividing by the standard deviation will ensure all the variables have approximately the same range. It’s also possible to convert any variable <span class="math inline">\(x_{d}\)</span> to the range <span class="math inline">\(\left[0, 1\right]\)</span> by using the transformation <span class="math inline">\(\frac{x - x_{\text{min}}}{x_{\text{max}} - x_{\text{min}}}\)</span>.</p></li>
+<li><p>Missing values: For some types of data, features have to be dropped for some samples. The sensor might have a temporary breakdown, or a respondent might have skipped a question, for example. Unfortunately, most methods do not have natural ways for handling missingness. To address this, it’s possible to <em>impute</em> a plausible value for all the missing values. A standard approach to imputation is to replace the missing values in a column using the median of all observed values in that column. This is called median imputation.</p></li>
+</ol>
+<p>More sophisticated approaches are able to learn the relationships across columns, and use these correlations to learn better imputations. This is called median imputation.</p>
+<p>Be especially careful with numerical values that have been used as a proxy for missingness (e.g., sometimes -99 is used as a placeholder). These should not be treated as actual numerical data, they are in fact missing!</p>
 <ol start="6" type="1">
-<li><p>Maybe the simplest curve is a linear one, <span class="math display">\[\begin{align*}
-f_{b}\left(x\right) = b_0 + b_1 x_1.
-\end{align*}\]</span> Here, <span class="math inline">\(b_0\)</span> gives the <span class="math inline">\(y\)</span>-intercept and <span class="math inline">\(b_1\)</span> gives the slope. When we have many input features, the equivalent formula is <span class="math display">\[\begin{align*}
-f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
-\end{align*}\]</span> where I’ve used the dot-product from linear algebra to simplify notation (after having appended a 1). This kind of model is called a <em>linear regression model</em>.</p></li>
-<li><p>How do we find a <span class="math inline">\(b\)</span> that fits the data well? We can try to optimize a “loss” function. This measures the quality of the fitted line. For linear regression, a good choice is squared error loss,</p></li>
+<li>Categorical inputs: From the last set of notes, only tree-based methods can directly use categorical variables as inputs. For other methods, the categorical variables needed to be coded. For example, variables with two levels can be converted to 0’s and 1’s, and variables with <span class="math inline">\(K\)</span> levels can be one-hot coded,</li>
 </ol>
-<p><span class="math display">\[\begin{align*}
-L\left(b\right) = \sum_{i = 1}^{N} \left(y_i - b^{T}x_{i}\right)^2.
-\end{align*}\]</span></p>
+<pre><code></code></pre>
+<p>Sometimes a variable has many levels. For example, a variable might say which city a user was from. In some cases, a few categories are very common, with the rest appearing only a few times. For the first situation, one solution is to replace the level of the category with the average value of the response within that category – this is called response coding. For the second, it’s possible to lump all the rare categories into an “other” column.</p>
 <ol start="7" type="1">
-<li>For classification, we can imagine drawing a linear boundary. For simplicity, we’ll assume we have only two classes, though a similar partition of the space can be made for arbitrary numbers of classes.</li>
+<li>To detect the types of issues discussed here, a good practice is to compute</li>
 </ol>
-<p>To describe this, we need to define a direction <span class="math inline">\(b\)</span> perpendicular to the boundary. We will say that whenever <span class="math display">\[\begin{align*}
-f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(x^{T}b\right)}
-\end{align*}\]</span> is larger than 0.5, we’re in the orange region, and whenever it’s smaller than 0.5, we’re in the purple region. This kind of model is called a <em>logistic regression model</em>.</p>
+<ol type="i">
+<li>summary statistics and (ii) a histogram / barplot for every feature in the dataset. Even if there are a few hundred features, it’s possible to skim the associated summaries relatively quickly (just a few seconds for each).</li>
+</ol>
+<h3 id="featurization">Featurization</h3>
 <ol start="8" type="1">
-<li>We need a loss function for logistic regression too. In theory, we could continue to use squared error loss, but we can do better by considering the fact that the true response is only one of two values. To make things concrete, say that <span class="math inline">\(y_i = 1\)</span> whenever it is an orange point, otherwise <span class="math inline">\(y_i = 0\)</span>. We can use binary cross-entropy loss,</li>
+<li>Often, useful predictors can be derived from, but are not explicitly present in, the raw data. For example, linear regression would struggle with either of the cases below,</li>
 </ol>
-<p><span class="math display">\[\begin{align*}
-\sum_{i = 1}^{N} y_i \log\left(f_{b}\left(x_i\right)\right) + \left(1 - y_i\right) \log\left(1 - f_{b}\left(x_i\right)\right)
-\end{align*}\]</span></p>
-<p>To understand this loss, let’s plot one term as a function of <span class="math inline">\(f_{b}\left(x_i\right)\)</span>, both when <span class="math inline">\(y_i\)</span> is 1 and when it is 0.</p>
-<p>(draw picture)</p>
-<ol start="8" type="1">
-<li><p>Let’s fit a linear regression in code. Below, I’m loading a dataset on ….. Notice that the response variable is continuous,</p></li>
-<li><p>Let’s do the same thing for a logistic regression.</p></li>
+<p>but if we add new columns to the original data <span class="math inline">\(x\)</span>, we will be able to fit the response well. The reason is that, even though <span class="math inline">\(y\)</span> is not linear in <span class="math inline">\(x\)</span>, it <em>is</em> linear in the derived features <span class="math inline">\(\mathbf{1}\left\{x &gt; 0\}\)</span> and <span class="math inline">\(x^2\)</span>, respectively.</p>
+<ol start="9" type="1">
+<li>This idea applies to all sorts of data, not just numerical columns,</li>
 </ol>
-<h4 id="sparse-linear-models">Sparse Linear Models</h4>
-<ol start="10" type="1">
-<li><p>In many cases, we will have recorded many types of features – coordinates of <span class="math inline">\(x_{i}\)</span> – that are not actually related to the response. A model that knows to ignore certain of the features will do better than a model that tries to use all of them. This is the main idea behind using sparsity in linear regression. We again fit the model <span class="math display">\[\begin{align*}
-f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
-\end{align*}\]</span> but we make the assumption that many of the <span class="math inline">\(b_{d}\)</span> are exactly 0. Graphically, we imagine that the response does not change at all as we change some of the inputs, all else held equal.</p></li>
-<li><p>This is how we implement the approach in <code>sklearn</code>.</p></li>
-<li><p>The same idea can be applied to logistic regression. In this case, having a coefficient <span class="math inline">\(b_d = 0\)</span> means that the probabilities for different class labels do not change at all as features <span class="math inline">\(x_d\)</span> is changed.</p></li>
-<li><p>Here is an implementation in <code>sklearn</code>.</p></li>
+<ul>
+<li>Longitudinal measurements: Imagine we want to classify a patient’s recovery probability based on a series of lab test results. We don’t have to use the raw measurements, we can use the trend, the range, or the “spikiness,” for example.</li>
+<li>Text: We can convert a document into the counts for different words.</li>
+<li>Images: For some tasks, the average color can be predictive (imagine classifying scenes as either forest or beach, which do you think will have more green on average?).</li>
+</ul>
+<p>The difficulty of deriving useful features in image data was one of the original motivations for deep learning. By automatically learning relevant features, deep learning replaced a whole suite of more complicated image feature extractors (e.g., HOG and SIFT).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Even Andrej Karpathy calls it <a href="http://karpathy.github.io/2019/04/25/recipe/">step 1</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-<h4 id="tree-based-models">Tree-based Models</h4>
-<ol start="14" type="1">
-<li>Tree-based models fit a different class of curves. To motivate them, consider making a prediction for the bus time arrival problem using the following diagram,</li>
-</ol>
-<p>Notice that we can use the same logic to do either regression or classification. For regression, we associate each “leaf” at the bottom of the tree with a continuous prediction. For classification, we associate it with the probability for different classes. It turns out that we can train these models using squared error and cross-entropy losses as before, though the details are beyond the scope of these notes.</p>
-<ol start="15" type="1">
-<li>It’s not immediately obvious, but these rules are equivalent to drawing curves that are piecewise constant over subsets of the input space. Let’s convince ourselves using some pictures. First, notice that a tree with a single split is exactly a “curve” that takes on two values, depending on the split point,</li>
-</ol>
-<p>If we split the same variable deeper, it creates more steps,</p>
-<p>What if we had two variables? Depending on the order, of the splits, we create different axis-aligned partitions,</p>
-<p>Q: What would be the diagram if I had switched <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> in the tree?</p>
-<ol start="16" type="1">
-<li><p>A very common variation on tree-based models computes a large ensemble of trees and then combines their curves in some way. How exactly they are combined is beyond the scope of these notes, but this is what random forests and gradient boosted decision trees are doing in the background.</p></li>
-<li><p>We can implement these models in <code>sklearn</code> using the following code.</p></li>
-</ol>
-<h3 id="relationships-across-classes">Relationships across classes</h3>
-<ol start="17" type="1">
-<li><p>The diagram below summarizes the relationships across classes.</p></li>
-<li><p>When should we use which of these approaches? Here are some relative strengths and weaknesses.</p></li>
-</ol>
-<table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th>Strengths</th>
-<th>Weaknesses</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Linear / Logistic Regression</td>
-<td>* Often to easy interpret<br>* No tuning parameters<br>* Very fast to train</td>
-<td>* Unstable when many features to pick from<br>* Can only fit linear curves / boundaries (though, see featurization notes)</td>
-</tr>
-<tr class="even">
-<td>Sparse Linear / Logistic Regression</td>
-<td>* Often easy to interpret<br>* Stable even when many features to pick from<br>* Very fast to train</td>
-<td>* Can only fit linear curves / boundaries</td>
-</tr>
-<tr class="odd">
-<td>Tree-based Classification / Regression</td>
-<td>* Can fit nonlinear functions of inputs</td>
-<td>* Can be slow to train<br>* Somewhat harder to interpret</td>
-</tr>
-</tbody>
-</table>
-<ol start="19" type="1">
-<li>Here is a flow chart you can use to guide the choice of which model class to use when.</li>
-</ol>
-<p>For example, try matching models to responses in the examples below, * Q1: We want to predict whether a patient has a disease given just the genetic profile. There are 1000 genes that can serve as predictors. There are only two possible responses. * Q2: A user on a site has been watching (too many…) episodes of Doctor Who. How many more minutes will they remain on the site today? As predictors, you have their features of their current and past viewing behavior (e.g., current time of day, number of hours per week for each of the last 4 weeks, etc.). We suspect that there are important nonlinear relationships between these predictors and the response. * Q3: We are trying to predict the next hour’s total energy production in a wind farm. We have a years worth of past production and weather data, but right now, we just want a baseline using current wind speed and the last hour’s production.</p>
-<p>The answers are, * A1: Sparse logistic regression. We have two classes, and most of the genes are unlikely to be relevant for classification. * A2: A tree-based method, like random forests or gradient boosting. This is because we anticipate a nonlinear relationship. * A3: Linear regression. The response is continuous and we just need a baseline using two predictors.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
