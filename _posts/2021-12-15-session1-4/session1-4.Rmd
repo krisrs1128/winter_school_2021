@@ -1,7 +1,7 @@
 ---
-title: "session1-4"
+title: "Model Evaluation and Visualization"
 description: |
-  A short description of the post.
+  Communicating model behavior after fitting them.
 author:
   - name: Kris Sankaran
     url: https://krisrs1128.github.com/LSLab
@@ -16,8 +16,52 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-Distill is a publication format for scientific and technical writing, native to the web.
+1. In some cases, it might be enough to know that a model is giving the correct
+predictions most of the time, without worrying too much about how it arrived at
+that decision. If a medical classifier worked 99.9\% of the time, I wouldn't
+question it -- I would try to figure out what to do next in the treatment plan.
+That said, in many situations, we might want to attribute model performance to a
+few characteristics of the data. This is often the case when we are using a
+model as a proxy for understanding a little more about the (biological,
+business, environmental, political, social, ...) processes that generated the
+data. In these notes, we'll review a few types of summaries and visualizations
+that can help with these attribution tasks.
 
-Learn more about using Distill at <https://rstudio.github.io/distill>.
+2. For (sparse) linear and logistic regression models, we can inspect the fitted
+coefficients $b$. If we have standardized the data, then the coefficients with
+the largest coefficients lead to the largest change in the response / class
+probabilities, all else held equal. In particular, coefficients that are
+estimated to be 0 can be safely ignored.
 
+Note that the fitted coefficient $\hat{b}_{d}$ should be interpreted in context
+of all the variables in the model, not just the $d^{th}$. This is because
+$\hat{b}_{d}$ represents the effect of variable $d$, after having _controlled
+for the rest_. To convince yourself that this important, you could try
+simulating data with two correlated predictors and seeing how the fitted
+coefficients compare to the uncorrelated predictor case.
 
+3. For tree-based models, there are no coefficients $\hat{b}$ to use for
+interpretation. Instead, it's common to consider the variable importance
+statistic. The importance of a variable measures the deterioration in a model
+when that variable is removed. If the model deteriorates substantially, then
+that variable is said to be important.
+
+4. Let's see how we extract coefficients and variable importance measures in
+`sklearn.`
+
+### Error Analysis
+
+5. Earlier, we discussed using a test set or cross-validation to evaluate how
+well a model performs on new data. A related, but deeper, question is to
+understand on which types of samples a model does better or worse. That is,
+instead of just asking how well a model performs on average, we may want to
+characterize situations where a model performs well and situations where it
+performs poorly. This can be used both to summarize the limitations of a model
+and guide future improvements.
+
+6. Error Quantiles: One strategy to error analysis is to simple take random
+samples from different quantiles of the error distribution.
+
+7. Error Prediction:
+
+### Visualizations
