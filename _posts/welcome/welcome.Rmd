@@ -202,3 +202,26 @@ strengths and weaknesses.
 | Linear / Logistic Regression | * Often to easy interpret<br>* No tuning parameters<br>* Very fast to train | * Unstable when many features to pick from<br>* Can only fit linear curves / boundaries (though, see featurization notes) |
 | Sparse Linear / Logistic Regression | * Often easy to interpret<br>* Stable even when many features to pick from<br>* Very fast to train | * Can only fit linear curves / boundaries |
 | Tree-based Classification / Regression | * Can fit nonlinear functions of inputs | * Can be slow to train<br>* Somewhat harder to interpret |
+
+19. Here is a flow chart you can use to guide the choice of which model class to
+use when.
+
+For example, try matching models to responses in the examples below,
+* Q1: We want to predict whether a patient has a disease given just the genetic
+profile. There are 1000 genes that can serve as predictors. There are only two
+possible responses.
+* Q2: A user on a site has been watching (too many...) episodes of Doctor
+Who. How many more minutes will they remain on the site today? As predictors,
+you have their features of their current and past viewing behavior (e.g.,
+current time of day, number of hours per week for each of the last 4 weeks,
+etc.). We suspect that there are important nonlinear relationships between
+these predictors and the response.
+* Q3: We are trying to predict the next hour's total energy production in a wind
+farm. We have a years worth of past production and weather data, but right now,
+we just want a baseline using current wind speed and the last hour's production.
+
+The answers are,
+* A1: Sparse logistic regression. We have two classes, and most of the genes are unlikely to be relevant for classification.
+* A2: A tree-based method, like random forests or gradient boosting. This is because we anticipate a nonlinear relationship.
+* A3: Linear regression. The response is continuous and we just need a baseline
+using two predictors.
