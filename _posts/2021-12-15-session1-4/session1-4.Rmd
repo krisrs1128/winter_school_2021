@@ -59,9 +59,45 @@ characterize situations where a model performs well and situations where it
 performs poorly. This can be used both to summarize the limitations of a model
 and guide future improvements.
 
-6. Error Quantiles: One strategy to error analysis is to simple take random
-samples from different quantiles of the error distribution.
+6. Error Quantiles: One strategy to error analysis is to take samples from
+different quantiles of the error distribution and then summarize their
+associated features. Specifically, it's possible to create a histogram of the
+squared error or cross-entropy losses on test samples. Take samples in the far
+right tail -- these are those with very large loss. What characteristics do they
+tend to share?
 
-7. Error Prediction:
+7. Error Prediction: A related approach is to use the sample-level test set
+errors from the previous step and use them as features in a new model from a
+different model class. The features that help distinguish low and high-error
+samples can be used to identify regions of poor performance. Note that, if it's
+possible to do better than a random baseline, then there is systematic structure
+remaining in the data that has not been used by the original model class.
 
 ### Visualizations
+
+8. As more complex models become more common in practice, visualization has
+emerged as a key way for (a) summarizing their essential structure and (b)
+motivating further modeling refinements. We will discuss the role of ceteris
+paribus and partial dependence profiles.
+
+9. We will write $x^{d \vert = z}$ to denote the observation $x$ with the
+$d^{th}$ coordinate set to $z$. How should we describe the effect of changing
+the $d^{th}$ input on predictions made by complex models $f\left(x\right)$? As a
+thought experiment, consider the example below. The surface is the fitted
+function $f(x)$, mapping a two dimensional input $x$ to a continuous response.
+How would you summarize the relationship between $x_1$ and $y$? The main problem
+is that the shape of the relationship depends on which value of $x_2$ we start
+at.
+
+10. One idea is to consider the values of $x_2$ that were observed in our
+dataset. Then, we can evaluate our model over a range of values $x_1$ after
+fixing those values of $x_2$. These curves are called Ceteris Paribus (CP)
+profiles The same principle holds in higher dimensions. We can fix $D−1$
+coordinates of an observation and then evaluate what happens to a sample’s
+predictions when we vary coordinate $d$. Mathematically, this is expressed by
+$h_{x}^{f, d}\left(z\right) := f\left(\mathbf{x}^{d\vert= z}\right)$
+
+11. To summarize a set of CP profiles, we can take their average across the
+dataset. This is called a partial dependence (PD) profile.  It is a more concise
+alternative to CP profiles, showing one curve per features, rather than one
+curve per sample.
