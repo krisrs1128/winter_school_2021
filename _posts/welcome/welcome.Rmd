@@ -13,7 +13,7 @@ output:
 
 ```{r, echo = FALSE}
 library(knitr)
-opts_chunk$set(echo = FALSE)
+opts_chunk$set(echo = FALSE, out.width = 500)
 ```
 
 1. We are making predictions all the time, often without realizing it. For
@@ -116,11 +116,21 @@ class looks like and how we might be able to fit it with data.
 \begin{align*}
 f_{b}\left(x\right) = b_0 + b_1 x_1.
 \end{align*}
-Here, $b_0$ gives the $y$-intercept and $b_1$ gives the slope. When we have many input features, the equivalent formula is
+Here, $b_0$ gives the $y$-intercept and $b_1$ gives the slope. 
+
+```{r}
+include_graphics("figures/linear-1d.png")
+```
+
+When we have many input features, the equivalent formula is
 \begin{align*}
 f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 \end{align*}
 where I've used the dot-product from linear algebra to simplify notation (after having appended a 1). This kind of model is called a _linear regression model_.
+
+```{r}
+include_graphics("figures/linear-2d.png")
+```
 
 7. How do we find a $b$ that fits the data well? We can try to optimize a "loss"
 function. This measures the quality of the fitted line. For linear regression, a
@@ -134,6 +144,10 @@ L\left(b\right) = \sum_{i = 1}^{N} \left(y_i - b^{T}x_{i}\right)^2.
 we'll assume we have only two classes, though a similar partition of the space
 can be made for arbitrary numbers of classes.
 
+```{r}
+include_graphics("figures/logistic-2d.png")
+```
+
 To describe this, we need to define a direction $b$ perpendicular to the
 boundary. We will say that whenever
 \begin{align*}
@@ -142,6 +156,10 @@ f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(x^{T}b\right)}
 is larger than 0.5, we're in the orange region, and whenever it's smaller than
 0.5, we're in the purple region. This kind of model is called a _logistic regression model_.
 
+```{r}
+include_graphics("figures/logistic-2d-arrow.png")
+```
+
 8. We need a loss function for logistic regression too. In theory, we could
 continue to use squared error loss, but we can do better by considering the fact
 that the true response is only one of two values. To make things concrete, say
@@ -149,13 +167,18 @@ that $y_i = 1$ whenever it is an orange point, otherwise $y_i = 0$. We can use
 binary cross-entropy loss,
 
 \begin{align*}
-\sum_{i = 1}^{N} y_i \log\left(f_{b}\left(x_i\right)\right) + \left(1 - y_i\right) \log\left(1 - f_{b}\left(x_i\right)\right)
+-\left[\sum_{i = 1}^{N} y_i \log\left(f_{b}\left(x_i\right)\right) + \left(1 - y_i\right) \log\left(1 - f_{b}\left(x_i\right)\right)\right]
 \end{align*}
 
-To understand this loss, let's plot one term as a function of
-$f_{b}\left(x_i\right)$, both when $y_i$ is 1 and when it is 0.
+To understand this loss, note that each term decomposes into either the blue or
+red curve, depending on whether the $y_i$ is 1 or 0.
 
-(draw picture)
+```{r}
+include_graphics("figures/logx.png")
+```
+
+If 1 is predicted with probability 1, then there is no loss (and conversely for
+0). The loss increases the further we are from the truth.
 
 8. Let's fit a linear regression in code. Below, I'm loading a dataset on .....
 Notice that the response variable is continuous,
@@ -176,11 +199,20 @@ but we make the assumption that many of the $b_{d}$ are exactly 0. Graphically,
 we imagine that the response does not change at all as we change some of the
 inputs, all else held equal.
 
-11. This is how we implement the approach in `sklearn`.
+```{r}
+include_graphics("figures/linear-1d-sparse.png")
+```
 
-12. The same idea can be applied to logistic regression. In this case, having a
+11. The same idea can be applied to logistic regression. In this case, having a
 coefficient $b_d = 0$  means that the probabilities for different class labels
 do not change at all as features $x_d$ is changed.
+
+```{r}
+include_graphics("figures/logistic-2d-sparse.png")
+```
+
+
+12. This is how we implement the approach in `sklearn`.
 
 13. Here is an implementation in `sklearn`.
 
@@ -189,6 +221,10 @@ do not change at all as features $x_d$ is changed.
 14. Tree-based models fit a different class of curves. To motivate them,
 consider making a prediction for the bus time arrival problem using the
 following diagram,
+
+```{r}
+include_graphics("figures/decision-tree-traffic.png")
+```
 
 Notice that we can use the same logic to do either regression or classification.
 For regression, we associate each "leaf" at the bottom of the tree with a
@@ -203,12 +239,20 @@ convince ourselves using some pictures. First, notice that a tree with a single
 split is exactly a "curve" that takes on two values, depending on the split
 point,
 
+```{r}
+include_graphics("figures/decision-tree-stump.png")
+```
+
 If we split the same variable deeper, it creates more steps,
 
 What if we had two variables? Depending on the order, of the splits, we create
 different axis-aligned partitions,
 
-Q: What would be the diagram if I had switched $x_1$ and $x_2$ in the tree?
+```{r}
+include_graphics("figures/decision-tree-stump-2d.png")
+```
+
+Q: What would be the diagram if I had switched the order of the splits (traffic before rain)?
 
 16. A very common variation on tree-based models computes a large ensemble of
 trees and then combines their curves in some way. How exactly they are combined
@@ -221,6 +265,10 @@ boosted decision trees are doing in the background.
 
 17. The diagram below summarizes the relationships across classes.
 
+```{r}
+include_graphics("figures/methods-relationships.png")
+```
+
 18. When should we use which of these approaches? Here are some relative
 strengths and weaknesses.
 
@@ -230,10 +278,7 @@ strengths and weaknesses.
 | Sparse Linear / Logistic Regression | * Often easy to interpret<br>* Stable even when many features to pick from<br>* Very fast to train | * Can only fit linear curves / boundaries |
 | Tree-based Classification / Regression | * Can fit nonlinear functions of inputs | * Can be slow to train<br>* Somewhat harder to interpret |
 
-19. Here is a flow chart you can use to guide the choice of which model class to
-use when.
-
-For example, try matching models to responses in the examples below,
+19. Try matching models to responses in the examples below,
 
   * Q1: We want to predict whether a patient has a disease given just the genetic
   profile. There are 1000 genes that can serve as predictors. There are only two
