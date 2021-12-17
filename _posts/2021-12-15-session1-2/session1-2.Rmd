@@ -12,7 +12,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
 1. A few simple improvements to the quality of a dataset can make a much bigger
@@ -37,7 +37,9 @@ that.
 For example, when fitting a linear regression, the whole line can be thrown off
 by one point,
 
-(picture)
+```{r, fig.cap = "Figure from [this site](https://tillbe.github.io/outlier-influence-identification.html)"}
+include_graphics("figures/outlier-influence.png")
+```
 
 There are [many
 approaches](https://www.researchgate.net/profile/Vipin-Kumar-54/publication/242403027_Outlier_Detection_A_Survey/links/0deec52d83600bb86c000000/Outlier-Detection-A-Survey.pdf)
@@ -55,6 +57,10 @@ deviation will ensure all the variables have approximately the same range. It's
 also possible to convert any variable $x_{d}$ to the range $\left[0, 1\right]$
 by using the transformation $\frac{x - x_{\text{min}}}{x_{\text{max}} - x_{\text{min}}}$.
 
+```{r, out.width = 200}
+include_graphics("figures/need-to-rescale.png")
+```
+
 5. Missing values: For some types of data, features have to be dropped for some
 samples. The sensor might have a temporary breakdown, or a respondent might have
 skipped a question, for example. Unfortunately, most methods do not have natural
@@ -63,9 +69,21 @@ plausible value for all the missing values. A standard approach to imputation is
 to replace the missing values in a column using the median of all observed
 values in that column. This is called median imputation. 
 
+```{r}
+include_graphics("figures/missingness-airquality.png")
+```
+
 More sophisticated approaches are able to learn the relationships across
 columns, and use these correlations to learn better imputations. This is called
-median imputation.
+multiple imputation.
+
+```{r, fig.cap = "An example where correlation between two variables might be used to impute their missing values (when exactly one is present)."}
+include_graphics("figures/mi-pre.png")
+```
+
+```{r, fig.cap = "Imputations using multiple imputation."}
+include_graphics("figures/mi-post.png")
+```
 
 Be especially careful with numerical values that have been used as a proxy for
 missingness (e.g., sometimes -99 is used as a placeholder). These should not be
@@ -76,10 +94,6 @@ directly use categorical variables as inputs. For other methods, the categorical
 variables needed to be coded. For example, variables with two levels can be
 converted to 0's and 1's, and variables with $K$ levels can be one-hot coded,
 
-```
-
-```
-
 Sometimes a variable has many levels. For example, a variable might say which
 city a user was from. In some cases, a few categories are very common, with the
 rest appearing only a few times. For the first situation, one solution is to
@@ -87,9 +101,7 @@ replace the level of the category with the average value of the response within
 that category -- this is called response coding. For the second, it's possible
 to lump all the rare categories into an "other" column.
 
-7. To detect the types of issues discussed here, a good practice is to compute
-(i) summary statistics and (ii) a histogram / barplot for every feature in the
-dataset. Even if there are a few hundred features, it's possible to skim the
+7. To detect the types of issues discussed here, a good practice is to compute (i) summary statistics and (ii) a histogram / barplot for every feature in the dataset. Even if there are a few hundred features, it's possible to skim the
 associated summaries relatively quickly (just a few seconds for each).
 
 ### Featurization
@@ -101,7 +113,7 @@ the cases below,
 
 but if we add new columns to the original data $x$, we will be able to fit the
 response well. The reason is that, even though $y$ is not linear in $x$, it _is_
-linear in the derived features $\mathbf{1}\left\{x > 0\}$ and $x^2$,
+linear in the derived features $\mathbf{1}\left\{x > 0\right\}$ and $x^2$,
 respectively.
 
 9. This idea applies to all sorts of data, not just numerical columns,
