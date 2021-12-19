@@ -1,3 +1,6 @@
 _posts/*/*.html
 _posts/*/*files*
+_posts/*/figures/*.png
+_posts/*/figures/*.jpg
+_posts/*/figures/*.jpeg
 .Rproj.user
