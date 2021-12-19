@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["session1-4_files/anchor-4.2.2/anchor.min.js","session1-4_files/bowser-1.9.3/bowser.min.js","session1-4_files/distill-2.2.21/template.v2.js","session1-4_files/header-attrs-2.8/header-attrs.js","session1-4_files/jquery-1.11.3/jquery.min.js","session1-4_files/popper-2.6.0/popper.min.js","session1-4_files/tippy-6.2.7/tippy-bundle.umd.min.js","session1-4_files/tippy-6.2.7/tippy-light-border.css","session1-4_files/tippy-6.2.7/tippy.css","session1-4_files/tippy-6.2.7/tippy.umd.min.js","session1-4_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["figures/error-analysis.ai","figures/error-analysis.png","figures/linear-1d-sparse.png","figures/variable-importance.ai","figures/variable-importance.png","partial-dependence-1.png","partial-dependence-2.png","session1-4_files/anchor-4.2.2/anchor.min.js","session1-4_files/bowser-1.9.3/bowser.min.js","session1-4_files/distill-2.2.21/template.v2.js","session1-4_files/header-attrs-2.8/header-attrs.js","session1-4_files/jquery-1.11.3/jquery.min.js","session1-4_files/popper-2.6.0/popper.min.js","session1-4_files/tippy-6.2.7/tippy-bundle.umd.min.js","session1-4_files/tippy-6.2.7/tippy-light-border.css","session1-4_files/tippy-6.2.7/tippy.css","session1-4_files/tippy-6.2.7/tippy.umd.min.js","session1-4_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2102,23 +2102,44 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><p>In some cases, it might be enough to know that a model is giving the correct predictions most of the time, without worrying too much about how it arrived at that decision. If a medical classifier worked 99.9% of the time, I wouldn’t question it – I would try to figure out what to do next in the treatment plan. That said, in many situations, we might want to attribute model performance to a few characteristics of the data. This is often the case when we are using a model as a proxy for understanding a little more about the (biological, business, environmental, political, social, …) processes that generated the data. In these notes, we’ll review a few types of summaries and visualizations that can help with these attribution tasks.</p></li>
 <li><p>For (sparse) linear and logistic regression models, we can inspect the fitted coefficients <span class="math inline">\(b\)</span>. If we have standardized the data, then the coefficients with the largest coefficients lead to the largest change in the response / class probabilities, all else held equal. In particular, coefficients that are estimated to be 0 can be safely ignored.</p></li>
 </ol>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="figures/linear-1d-sparse.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
 <p>Note that the fitted coefficient <span class="math inline">\(\hat{b}_{d}\)</span> should be interpreted in context of all the variables in the model, not just the <span class="math inline">\(d^{th}\)</span>. This is because <span class="math inline">\(\hat{b}_{d}\)</span> represents the effect of variable <span class="math inline">\(d\)</span>, after having <em>controlled for the rest</em>. To convince yourself that this important, you could try simulating data with two correlated predictors and seeing how the fitted coefficients compare to the uncorrelated predictor case.</p>
 <ol start="3" type="1">
-<li><p>For tree-based models, there are no coefficients <span class="math inline">\(\hat{b}\)</span> to use for interpretation. Instead, it’s common to consider the variable importance statistic. The importance of a variable measures the deterioration in a model when that variable is removed. If the model deteriorates substantially, then that variable is said to be important.</p></li>
-<li><p>Let’s see how we extract coefficients and variable importance measures in <code>sklearn.</code></p></li>
+<li>For tree-based models, there are no coefficients <span class="math inline">\(\hat{b}\)</span> to use for interpretation. Instead, it’s common to consider the variable importance statistic. The importance of a variable measures the deterioration in a model when that variable is removed. If the model deteriorates substantially, then that variable is said to be important.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="figures/variable-importance.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<ol start="4" type="1">
+<li>Let’s see how we extract coefficients and variable importance measures in <code>sklearn.</code></li>
 </ol>
 <h3 id="error-analysis">Error Analysis</h3>
 <ol start="5" type="1">
 <li><p>Earlier, we discussed using a test set or cross-validation to evaluate how well a model performs on new data. A related, but deeper, question is to understand on which types of samples a model does better or worse. That is, instead of just asking how well a model performs on average, we may want to characterize situations where a model performs well and situations where it performs poorly. This can be used both to summarize the limitations of a model and guide future improvements.</p></li>
 <li><p>Error Quantiles: One strategy to error analysis is to take samples from different quantiles of the error distribution and then summarize their associated features. Specifically, it’s possible to create a histogram of the squared error or cross-entropy losses on test samples. Take samples in the far right tail – these are those with very large loss. What characteristics do they tend to share?</p></li>
-<li><p>Error Prediction: A related approach is to use the sample-level test set errors from the previous step and use them as features in a new model from a different model class. The features that help distinguish low and high-error samples can be used to identify regions of poor performance. Note that, if it’s possible to do better than a random baseline, then there is systematic structure remaining in the data that has not been used by the original model class.</p></li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="figures/error-analysis.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<ol start="7" type="1">
+<li>Error Prediction: A related approach is to use the sample-level test set errors from the previous step and use them as features in a new model from a different model class. The features that help distinguish low and high-error samples can be used to identify regions of poor performance. Note that, if it’s possible to do better than a random baseline, then there is systematic structure remaining in the data that has not been used by the original model class.</li>
 </ol>
 <h3 id="visualizations">Visualizations</h3>
 <ol start="8" type="1">
 <li><p>As more complex models become more common in practice, visualization has emerged as a key way for (a) summarizing their essential structure and (b) motivating further modeling refinements. We will discuss the role of ceteris paribus and partial dependence profiles.</p></li>
 <li><p>We will write <span class="math inline">\(x^{d \vert = z}\)</span> to denote the observation <span class="math inline">\(x\)</span> with the <span class="math inline">\(d^{th}\)</span> coordinate set to <span class="math inline">\(z\)</span>. How should we describe the effect of changing the <span class="math inline">\(d^{th}\)</span> input on predictions made by complex models <span class="math inline">\(f\left(x\right)\)</span>? As a thought experiment, consider the example below. The surface is the fitted function <span class="math inline">\(f(x)\)</span>, mapping a two dimensional input <span class="math inline">\(x\)</span> to a continuous response. How would you summarize the relationship between <span class="math inline">\(x_1\)</span> and <span class="math inline">\(y\)</span>? The main problem is that the shape of the relationship depends on which value of <span class="math inline">\(x_2\)</span> we start at.</p></li>
 <li><p>One idea is to consider the values of <span class="math inline">\(x_2\)</span> that were observed in our dataset. Then, we can evaluate our model over a range of values <span class="math inline">\(x_1\)</span> after fixing those values of <span class="math inline">\(x_2\)</span>. These curves are called Ceteris Paribus (CP) profiles The same principle holds in higher dimensions. We can fix <span class="math inline">\(D−1\)</span> coordinates of an observation and then evaluate what happens to a sample’s predictions when we vary coordinate <span class="math inline">\(d\)</span>. Mathematically, this is expressed by <span class="math inline">\(h_{x}^{f, d}\left(z\right) := f\left(\mathbf{x}^{d\vert= z}\right)\)</span></p></li>
-<li><p>To summarize a set of CP profiles, we can take their average across the dataset. This is called a partial dependence (PD) profile. It is a more concise alternative to CP profiles, showing one curve per features, rather than one curve per sample.</p></li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="partial-dependence-1.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="partial-dependence-2.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<ol start="11" type="1">
+<li>To summarize a set of CP profiles, we can take their average across the dataset. This is called a partial dependence (PD) profile. It is a more concise alternative to CP profiles, showing one curve per features, rather than one curve per sample.</li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
