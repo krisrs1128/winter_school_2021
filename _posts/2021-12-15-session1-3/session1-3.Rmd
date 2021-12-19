@@ -13,24 +13,50 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+opts_chunk$set(echo = FALSE, fig.align = "center", out.width = 500)
 ```
 
 1. Even if we can effectively draw curves through data, we might not actually be
-able to make good predictions on future samples. For example, suppose we have
-the dataset below for training a model,
+able to make good predictions on future samples. For example, suppose we fit this complicated curve to a training dataset,
 
-We could fit this curve,
+```{r}
+include_graphics("figures/overfit-1.png")
+```
 
+It would get seem to have perfect performance on the training data. Now imagine
+that we collected a few more samples, all from the same population,
 
-and it would get zero error on this _training dataset_. However, it won't do
-nearly as well on future observations as the this fit,
+```{r}
+include_graphics("figures/overfit-2.png")
+```
+
+It turns out that the error is higher than a smoother curve that has higher
+training error,
+
+```{r}
+include_graphics("figures/overfit-3.png")
+```
+
+Notice that the blue test errors are all shorter here than in the previous fit,
+
+```{r}
+include_graphics("figures/overfit-4.png")
+```
 
 2. This issue can also occur in classification. For example, the decision
 boundary here,
 
+```{r}
+include_graphics("figures/class-overfit-1.png")
+```
+
 is perfect on the training dataset. But it will likely perform worse than the
 simpler boundary here,
+
+```{r}
+include_graphics("figures/class-overfit-1.png")
+```
 
 3. This phenomenon is called _overfitting_. Complex models might appear to do
 well on a dataset available for training, only to fail when they are released
@@ -38,6 +64,10 @@ well on a dataset available for training, only to fail when they are released
 choosing models that are complex enough to fit the essential structure in a
 dataset, but not so complex that they overfit to patterns that will not appear
 again in future samples.
+
+```{r}
+include_graphics("figures/validation-set-1.png")
+```
 
 4. The simplest way to choose a model with the right level of complexity is to
 use data splitting. Randomly split the data that are available into a train and
@@ -50,6 +80,10 @@ only a single train / test split, we can group the data into $K$-different
 "folds." For each complexity level , we can train $K$ models, each time leaving
 out one of the folds. Performance of these models on the hold-out folds is used
 for estimating the appropriate complexity level.
+
+```{r}
+include_graphics("figures/cv-full.png")
+```
 
 6. There are a few subtleties related to train / test splits and
 cross-validation that are worth knowing,
@@ -80,18 +114,25 @@ sample hundreds of datasets similar to the one that is available. On each of
 these imaginary datasets, we can imagine training a new model (at a given
 complexity level). Then, we can define,
 
-  * Bias: Average predictions from models trained across each of the imaginery
+  * Bias: Average predictions from models trained across each of the imaginary
   datasets. How far off are they from the truth, on average?
   * Variance: How similar are predictions from across the different models?
+
+```{r}
+include_graphics("figures/bias-variance-1.png")
+```
 
 Ideally, we would have low values for both bias and variance, since they both
 contribute to performance on the test set. In practice, though, there is a
 trade-off. Often, the models that tend to be closest to the truth on average
-might be far off on any individual run.
-
-Conversely, models that are very stable from run to run might be consistenly
-incorrect in certain regions.
+might be far off on any individual run. Conversely, models that are very stable
+from run to run might be consistenly incorrect in certain regions.
 
 Models with high variance but low bias tend to be overfit, and models with low
 variance but high bias tend to be underfit. Models that have good test or
 cross-validation errors have found a good compromise between bias and variance.
+
+In practice, a useful strategy is to,
+* Try overfitting the data. This ensures that the features and / or model class are sufficiently rich. This provides a kind of upper bound on the possible performance with the current setup.
+* Try regularizing the overfit model so that it also performs well on holdout
+data.
