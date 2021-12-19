@@ -13,7 +13,8 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+opts_chunk$set(echo = FALSE, fig.align = "center", out.width = 500)
 ```
 
 1. In some cases, it might be enough to know that a model is giving the correct
@@ -33,10 +34,13 @@ the largest coefficients lead to the largest change in the response / class
 probabilities, all else held equal. In particular, coefficients that are
 estimated to be 0 can be safely ignored.
 
+```{r}
+include_graphics("figures/linear-1d-sparse.png")
+```
+
 Note that the fitted coefficient $\hat{b}_{d}$ should be interpreted in context
 of all the variables in the model, not just the $d^{th}$. This is because
-$\hat{b}_{d}$ represents the effect of variable $d$, after having _controlled
-for the rest_. To convince yourself that this important, you could try
+$\hat{b}_{d}$ represents the effect of variable $d$, after having _controlled for the rest_. To convince yourself that this important, you could try
 simulating data with two correlated predictors and seeing how the fitted
 coefficients compare to the uncorrelated predictor case.
 
@@ -45,6 +49,10 @@ interpretation. Instead, it's common to consider the variable importance
 statistic. The importance of a variable measures the deterioration in a model
 when that variable is removed. If the model deteriorates substantially, then
 that variable is said to be important.
+
+```{r}
+include_graphics("figures/variable-importance.png")
+```
 
 4. Let's see how we extract coefficients and variable importance measures in
 `sklearn.`
@@ -65,6 +73,10 @@ associated features. Specifically, it's possible to create a histogram of the
 squared error or cross-entropy losses on test samples. Take samples in the far
 right tail -- these are those with very large loss. What characteristics do they
 tend to share?
+
+```{r}
+include_graphics("figures/error-analysis.png")
+```
 
 7. Error Prediction: A related approach is to use the sample-level test set
 errors from the previous step and use them as features in a new model from a
@@ -96,6 +108,14 @@ profiles The same principle holds in higher dimensions. We can fix $D−1$
 coordinates of an observation and then evaluate what happens to a sample’s
 predictions when we vary coordinate $d$. Mathematically, this is expressed by
 $h_{x}^{f, d}\left(z\right) := f\left(\mathbf{x}^{d\vert= z}\right)$
+
+```{r}
+include_graphics("figures/partial-dependence-1.png")
+```
+
+```{r}
+include_graphics("figures/partial-dependence-2.png")
+```
 
 11. To summarize a set of CP profiles, we can take their average across the
 dataset. This is called a partial dependence (PD) profile.  It is a more concise
