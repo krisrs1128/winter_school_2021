@@ -13,7 +13,7 @@ output:
 
 ```{r, echo = FALSE}
 library(knitr)
-opts_chunk$set(echo = FALSE, out.width = 500)
+opts_chunk$set(echo = FALSE, out.width = 500, fig.align = "center")
 ```
 
 1. We are making predictions all the time, often without realizing it. For
@@ -180,8 +180,32 @@ include_graphics("figures/logx.png")
 If 1 is predicted with probability 1, then there is no loss (and conversely for
 0). The loss increases the further we are from the truth.
 
-8. Let's fit a linear regression in code. Below, I'm loading a dataset on .....
-Notice that the response variable is continuous,
+8. Let's fit a linear regression in code. Below, I'm loading a dataset about
+diabetes disease progression. The response $y$ is disease severity one year
+after diagnosis, it ranges from 25 (low severity) to 246 (high severity). There
+are $D = 10$ numeric predictors; below I print 4 samples corresponding to the first 5.
+
+```{python, echo = TRUE}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import datasets, linear_model
+
+X, y = datasets.load_diabetes(return_X_y=True)
+X[:4, :5] # first five predictors
+y[:4] # example response
+```
+
+Let's now fit a linear model from $X$ to $y$. The first line tells python that
+we are using a Linear Regression model class. The second searches over
+coefficients $b$ to minimize the squared-error loss between $x^T b$ and $y$. The
+third line prints out the fitted coefficient $\hat{b}$.
+
+```{python}
+model = linear_model.LinearRegression()
+model.fit(X, y)
+model.coef_ # fitted b coefficients
+```
 
 9. Let's do the same thing for a logistic regression.
 
