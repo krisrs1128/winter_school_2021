@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["figures/bias-variance-1.ai","figures/bias-variance-1.png","figures/class-overfit-1.ai","figures/class-overfit-1.png","figures/class-overfit-2.ai","figures/class-overfit-2.png","figures/cv-full.ai","figures/cv-full.png","figures/overfit-1.ai","figures/overfit-1.png","figures/overfit-2.ai","figures/overfit-2.png","figures/overfit-3.ai","figures/overfit-3.png","figures/overfit-4.ai","figures/overfit-4.png","figures/validation-set-1.ai","figures/validation-set-1.png","session1-3_files/anchor-4.2.2/anchor.min.js","session1-3_files/bowser-1.9.3/bowser.min.js","session1-3_files/distill-2.2.21/template.v2.js","session1-3_files/header-attrs-2.8/header-attrs.js","session1-3_files/jquery-1.11.3/jquery.min.js","session1-3_files/popper-2.6.0/popper.min.js","session1-3_files/tippy-6.2.7/tippy-bundle.umd.min.js","session1-3_files/tippy-6.2.7/tippy-light-border.css","session1-3_files/tippy-6.2.7/tippy.css","session1-3_files/tippy-6.2.7/tippy.umd.min.js","session1-3_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["figures/bias-variance-1.ai","figures/bias-variance-1.png","figures/class-overfit-1.ai","figures/class-overfit-1.png","figures/class-overfit-2.ai","figures/class-overfit-2.png","figures/cv-full.ai","figures/cv-full.png","figures/overfit-1.ai","figures/overfit-1.png","figures/overfit-2.ai","figures/overfit-2.png","figures/overfit-3.ai","figures/overfit-3.png","figures/overfit-4.ai","figures/overfit-4.png","figures/validation-set-1.ai","figures/validation-set-1.png","session1-3_files/anchor-4.2.2/anchor.min.js","session1-3_files/bowser-1.9.3/bowser.min.js","session1-3_files/distill-2.2.21/template.v2.js","session1-3_files/figure-html5/unnamed-chunk-12-1.png","session1-3_files/figure-html5/unnamed-chunk-156-1.png","session1-3_files/figure-html5/unnamed-chunk-36-1.png","session1-3_files/header-attrs-2.8/header-attrs.js","session1-3_files/jquery-1.11.3/jquery.min.js","session1-3_files/popper-2.6.0/popper.min.js","session1-3_files/tippy-6.2.7/tippy-bundle.umd.min.js","session1-3_files/tippy-6.2.7/tippy-light-border.css","session1-3_files/tippy-6.2.7/tippy.css","session1-3_files/tippy-6.2.7/tippy.umd.min.js","session1-3_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2148,8 +2148,67 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>We incur a bias when splitting the data. The fact that we split the data means that we aren’t using all the available data, which leads to slightly lower performance. If it hurts more complex models more than simpler ones, than it can even lead to slightly incorrect selection. After having chosen a given model complexity, it’s worth retraining that model on the full available dataset.</li>
 </ul>
 <ol start="7" type="1">
-<li><p>Let’s implement both simple train / test and cross-validation using <code>sklearn</code>. Notice that training error is much lower than test error.</p></li>
-<li><p>Related to overfitting, there is an important phenomenon called the bias-variance tradeoff. To understand this trade-off, imagine being able to sample hundreds of datasets similar to the one that is available. On each of these imaginary datasets, we can imagine training a new model (at a given complexity level). Then, we can define,</p></li>
+<li>Let’s implement both simple train / test and cross-validation using <code>sklearn</code>. First, let’s just use a train / test split, without cross-validating. We’ll consider the penguins dataset from the earlier lecture.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># prepare data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> pd.read_csv(<span class="st">&quot;https://uwmadison.box.com/shared/static/mnrdkzsb5tbhz2kpqahq1r2u3cpy1gg0.csv&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> penguins.dropna()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> penguins[[<span class="st">&quot;bill_length_mm&quot;</span>, <span class="st">&quot;bill_depth_mm&quot;</span>]], penguins[<span class="st">&quot;species&quot;</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  X_train, X_test, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  y_train, y_test, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  indices_train, indices_test </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>) <span class="op">=</span>  train_test_split(X, y, np.arange(<span class="bu">len</span>(X)), test_size<span class="op">=</span><span class="fl">0.25</span>)</span></code></pre></div>
+</div>
+<p>Let’s double check that the sizes of the train and test sets make sense.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(indices_train)</span></code></pre></div>
+<pre><code>249</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(indices_test)</span></code></pre></div>
+<pre><code>84</code></pre>
+</div>
+<p>Now, we’ll train the model on just the training set.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingClassifier</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> GradientBoostingClassifier()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train)</span></code></pre></div>
+<pre><code>GradientBoostingClassifier()</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>penguins[<span class="st">&quot;y_hat&quot;</span>] <span class="op">=</span> model.predict(X)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># keep track of which rows are train vs. test</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>penguins[<span class="st">&quot;split&quot;</span>] <span class="op">=</span> <span class="st">&quot;train&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> penguins.reset_index()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>penguins.loc[<span class="bu">list</span>(indices_test), <span class="st">&quot;split&quot;</span>] <span class="op">=</span> <span class="st">&quot;test&quot;</span></span></code></pre></div>
+</div>
+<p>Finally, we’ll visualize to see the number of errors on either split. The first row are the test samples, the second row are the train samples. Notice that even though prediction on the training set is perfect, there are a few errors on the test set.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>ggplot</span><span class='op'>(</span><span class='va'>py</span><span class='op'>$</span><span class='va'>penguins</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>geom_point</span><span class='op'>(</span><span class='fu'>aes</span><span class='op'>(</span><span class='va'>bill_length_mm</span>, <span class='va'>bill_depth_mm</span>, col <span class='op'>=</span> <span class='va'>species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>scale_color_manual</span><span class='op'>(</span>values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#3DD9BC"</span>, <span class='st'>"#6DA671"</span>, <span class='st'>"#F285D5"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>labs</span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Bill Length"</span>, y <span class='op'>=</span> <span class='st'>"Bill Depth"</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>facet_grid</span><span class='op'>(</span><span class='va'>split</span> <span class='op'>~</span> <span class='va'>y_hat</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="session1-3_files/figure-html5/unnamed-chunk-156-1.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<ol start="8" type="1">
+<li>Next, let’s look at cross validation. There is a handy wrapper function called <code>cross_val_score</code> in <code>sklearn</code> that handles all the splitting and looping for us. We just have to give it a model type and it will evaluate it on a few splits of the data. The <code>scores</code> vector below gives the error rate on <span class="math inline">\(K = 5\)</span> holdout folds.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> cross_val_score</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model_class <span class="op">=</span> GradientBoostingClassifier()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> cross_val_score(model_class, X, y, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>scores</span></code></pre></div>
+<pre><code>array([1.        , 0.98507463, 0.94029851, 0.90909091, 0.96969697])</code></pre>
+</div>
+<ol start="9" type="1">
+<li>Related to overfitting, there is an important phenomenon called the bias-variance tradeoff. To understand this trade-off, imagine being able to sample hundreds of datasets similar to the one that is available. On each of these imaginary datasets, we can imagine training a new model (at a given complexity level). Then, we can define,</li>
 </ol>
 <ul>
 <li>Bias: Average predictions from models trained across each of the imaginary datasets. How far off are they from the truth, on average?</li>
@@ -2158,10 +2217,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="figures/bias-variance-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
-<p>Ideally, we would have low values for both bias and variance, since they both contribute to performance on the test set. In practice, though, there is a trade-off. Often, the models that tend to be closest to the truth on average might be far off on any individual run. Conversely, models that are very stable from run to run might be consistenly incorrect in certain regions.</p>
+<p>Ideally, we would have low values for both bias and variance, since they both contribute to performance on the test set. In practice, though, there is a trade-off. Often, the models that tend to be closest to the truth on average might be far off on any individual run. Conversely, models that are very stable from run to run might be consistently incorrect in certain regions.</p>
 <p>Models with high variance but low bias tend to be overfit, and models with low variance but high bias tend to be underfit. Models that have good test or cross-validation errors have found a good compromise between bias and variance.</p>
-<p>In practice, a useful strategy is to, * Try overfitting the data. This ensures that the features and / or model class are sufficiently rich. This provides a kind of upper bound on the possible performance with the current setup. * Try regularizing the overfit model so that it also performs well on holdout data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>In practice, a useful strategy is to,</p>
+<ul>
+<li>Try overfitting the data. This ensures that the features and / or model class are sufficiently rich. This provides a kind of upper bound on the possible performance with the current setup.</li>
+<li>Try regularizing the overfit model so that it also performs well on holdout data.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

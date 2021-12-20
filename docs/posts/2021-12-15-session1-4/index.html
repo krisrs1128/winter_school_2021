@@ -117,7 +117,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["figures/error-analysis.ai","figures/error-analysis.png","figures/linear-1d-sparse.png","figures/variable-importance.ai","figures/variable-importance.png","partial-dependence-1.png","partial-dependence-2.png","session1-4_files/anchor-4.2.2/anchor.min.js","session1-4_files/bowser-1.9.3/bowser.min.js","session1-4_files/distill-2.2.21/template.v2.js","session1-4_files/header-attrs-2.8/header-attrs.js","session1-4_files/jquery-1.11.3/jquery.min.js","session1-4_files/popper-2.6.0/popper.min.js","session1-4_files/tippy-6.2.7/tippy-bundle.umd.min.js","session1-4_files/tippy-6.2.7/tippy-light-border.css","session1-4_files/tippy-6.2.7/tippy.css","session1-4_files/tippy-6.2.7/tippy.umd.min.js","session1-4_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["figures/error-analysis.ai","figures/error-analysis.png","figures/interaction-effects.png","figures/linear-1d-sparse.png","figures/partial-dependence-1.png","figures/partial-dependence-2.png","figures/variable-importance.ai","figures/variable-importance.png","session1-4_files/anchor-4.2.2/anchor.min.js","session1-4_files/bowser-1.9.3/bowser.min.js","session1-4_files/distill-2.2.21/template.v2.js","session1-4_files/figure-html5/unnamed-chunk-11-1.png","session1-4_files/figure-html5/unnamed-chunk-12-1.png","session1-4_files/figure-html5/unnamed-chunk-13-1.png","session1-4_files/figure-html5/unnamed-chunk-5-1.png","session1-4_files/figure-html5/unnamed-chunk-5-2.png","session1-4_files/figure-html5/unnamed-chunk-5-3.png","session1-4_files/header-attrs-2.8/header-attrs.js","session1-4_files/jquery-1.11.3/jquery.min.js","session1-4_files/popper-2.6.0/popper.min.js","session1-4_files/tippy-6.2.7/tippy-bundle.umd.min.js","session1-4_files/tippy-6.2.7/tippy-light-border.css","session1-4_files/tippy-6.2.7/tippy.css","session1-4_files/tippy-6.2.7/tippy.umd.min.js","session1-4_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2113,8 +2113,35 @@ document.addEventListener('DOMContentLoaded', function() {
 <p><img src="figures/variable-importance.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <ol start="4" type="1">
-<li>Let’s see how we extract coefficients and variable importance measures in <code>sklearn.</code></li>
+<li>Let’s see how we extract coefficients and variable importance measures in <code>sklearn.</code> First, we’ll revisit the Office prediction task. Earlier, we found that the cast and writers were predictive of user ratings, but we never discussed which of the features were actually relevant. The block below refits the code we had from before.</li>
 </ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>office <span class="op">=</span> pd.read_csv(<span class="st">&quot;https://uwmadison.box.com/shared/static/ab0opn7t8cagr1gj87ty94nomu5s347o.csv&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> office.iloc[:, <span class="dv">2</span>:<span class="op">-</span><span class="dv">1</span>], office[<span class="st">&quot;imdb_rating&quot;</span>]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> (y <span class="op">-</span> y.mean()) <span class="op">/</span> y.std() <span class="co"># standardize</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> linear_model.ElasticNet(alpha<span class="op">=</span><span class="fl">1e-1</span>, l1_ratio<span class="op">=</span><span class="fl">0.5</span>) <span class="co"># in real life, have to tune these parameters</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span></code></pre></div>
+<pre><code>ElasticNet(alpha=0.1)</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>office[<span class="st">&quot;y_hat&quot;</span>] <span class="op">=</span> model.predict(X)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>office[<span class="st">&quot;imdb_rating&quot;</span>] <span class="op">=</span> y</span></code></pre></div>
+</div>
+<p>Let’s sort the predictors by the sizes of their coefficients.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ranks <span class="op">=</span> np.argsort(np.<span class="bu">abs</span>(model.coef_))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X.columns[ranks]</span></code></pre></div>
+<pre><code>Index([&#39;justin_spitzer&#39;, &#39;brent_forrester&#39;, &#39;randall_einhorn&#39;,
+       &#39;jennifer_celotta&#39;, &#39;lee_eisenberg&#39;, &#39;gene_stupnitsky&#39;, &#39;paul_feig&#39;,
+       &#39;mindy_kaling&#39;, &#39;paul_lieberstein&#39;, &#39;b_j_novak&#39;, &#39;ken_kwapis&#39;,
+       &#39;jeffrey_blitz&#39;, &#39;andy&#39;, &#39;oscar&#39;, &#39;erin&#39;, &#39;ryan&#39;, &#39;pam&#39;, &#39;dwight&#39;,
+       &#39;angela&#39;, &#39;michael&#39;, &#39;darryl&#39;, &#39;jim&#39;, &#39;toby&#39;, &#39;kevin&#39;, &#39;jan&#39;, &#39;phyllis&#39;,
+       &#39;kelly&#39;, &#39;greg_daniels&#39;],
+      dtype=&#39;object&#39;)</code></pre>
+</div>
+<p>The block below plots the features against the truth and the predicted values, for a few of the more important features.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="session1-4_files/figure-html5/unnamed-chunk-5-1.png" width="500" style="display: block; margin: auto;" /><img src="session1-4_files/figure-html5/unnamed-chunk-5-2.png" width="500" style="display: block; margin: auto;" /><img src="session1-4_files/figure-html5/unnamed-chunk-5-3.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
 <h3 id="error-analysis">Error Analysis</h3>
 <ol start="5" type="1">
 <li><p>Earlier, we discussed using a test set or cross-validation to evaluate how well a model performs on new data. A related, but deeper, question is to understand on which types of samples a model does better or worse. That is, instead of just asking how well a model performs on average, we may want to characterize situations where a model performs well and situations where it performs poorly. This can be used both to summarize the limitations of a model and guide future improvements.</p></li>
@@ -2129,19 +2156,51 @@ document.addEventListener('DOMContentLoaded', function() {
 <h3 id="visualizations">Visualizations</h3>
 <ol start="8" type="1">
 <li><p>As more complex models become more common in practice, visualization has emerged as a key way for (a) summarizing their essential structure and (b) motivating further modeling refinements. We will discuss the role of ceteris paribus and partial dependence profiles.</p></li>
-<li><p>We will write <span class="math inline">\(x^{d \vert = z}\)</span> to denote the observation <span class="math inline">\(x\)</span> with the <span class="math inline">\(d^{th}\)</span> coordinate set to <span class="math inline">\(z\)</span>. How should we describe the effect of changing the <span class="math inline">\(d^{th}\)</span> input on predictions made by complex models <span class="math inline">\(f\left(x\right)\)</span>? As a thought experiment, consider the example below. The surface is the fitted function <span class="math inline">\(f(x)\)</span>, mapping a two dimensional input <span class="math inline">\(x\)</span> to a continuous response. How would you summarize the relationship between <span class="math inline">\(x_1\)</span> and <span class="math inline">\(y\)</span>? The main problem is that the shape of the relationship depends on which value of <span class="math inline">\(x_2\)</span> we start at.</p></li>
-<li><p>One idea is to consider the values of <span class="math inline">\(x_2\)</span> that were observed in our dataset. Then, we can evaluate our model over a range of values <span class="math inline">\(x_1\)</span> after fixing those values of <span class="math inline">\(x_2\)</span>. These curves are called Ceteris Paribus (CP) profiles The same principle holds in higher dimensions. We can fix <span class="math inline">\(D−1\)</span> coordinates of an observation and then evaluate what happens to a sample’s predictions when we vary coordinate <span class="math inline">\(d\)</span>. Mathematically, this is expressed by <span class="math inline">\(h_{x}^{f, d}\left(z\right) := f\left(\mathbf{x}^{d\vert= z}\right)\)</span></p></li>
+<li><p>We will write <span class="math inline">\(x^{d \vert = z}\)</span> to denote the observation <span class="math inline">\(x\)</span> with the <span class="math inline">\(d^{th}\)</span> coordinate set to <span class="math inline">\(z\)</span>. How should we describe the effect of changing the <span class="math inline">\(d^{th}\)</span> input on predictions made by complex models <span class="math inline">\(f\left(x\right)\)</span>? As a thought experiment, consider the example below.</p></li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="partial-dependence-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="figures/interaction-effects.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<p>The surface is the fitted function <span class="math inline">\(f(x)\)</span>, mapping a two dimensional input <span class="math inline">\(x\)</span> to a continuous response. How would you summarize the relationship between <span class="math inline">\(x_1\)</span> and <span class="math inline">\(y\)</span>? The main problem is that the shape of the relationship depends on which value of <span class="math inline">\(x_2\)</span> we start at.</p>
+<ol start="10" type="1">
+<li>One idea is to consider the values of <span class="math inline">\(x_2\)</span> that were observed in our dataset. Then, we can evaluate our model over a range of values <span class="math inline">\(x_1\)</span> after fixing those values of <span class="math inline">\(x_2\)</span>. These curves are called Ceteris Paribus (CP) profiles The same principle holds in higher dimensions. We can fix <span class="math inline">\(D−1\)</span> coordinates of an observation and then evaluate what happens to a sample’s predictions when we vary coordinate <span class="math inline">\(d\)</span>. Mathematically, this is expressed by <span class="math inline">\(h_{x}^{f, d}\left(z\right) := f\left(\mathbf{x}^{d\vert= z}\right)\)</span></li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="figures/partial-dependence-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="partial-dependence-2.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="figures/partial-dependence-2.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <ol start="11" type="1">
-<li>To summarize a set of CP profiles, we can take their average across the dataset. This is called a partial dependence (PD) profile. It is a more concise alternative to CP profiles, showing one curve per features, rather than one curve per sample.</li>
+<li><p>To summarize a set of CP profiles, we can take their average across the dataset. This is called a partial dependence (PD) profile. It is a more concise alternative to CP profiles, showing one curve per features, rather than one curve per sample.</p></li>
+<li><p>We can visualize the CP profiles using the <code>plot_partial_dependence</code> function in <code>sklearn</code>. Let’s apply it to the gradient boosting classifier we used for the penguins dataset. The block below refits the gradient boosting model.</p></li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingClassifier</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> pd.read_csv(<span class="st">&quot;https://uwmadison.box.com/shared/static/mnrdkzsb5tbhz2kpqahq1r2u3cpy1gg0.csv&quot;</span>).dropna()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> GradientBoostingClassifier()</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> penguins[[<span class="st">&quot;bill_length_mm&quot;</span>, <span class="st">&quot;bill_depth_mm&quot;</span>]], penguins[<span class="st">&quot;species&quot;</span>]</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span></code></pre></div>
+<pre><code>GradientBoostingClassifier()</code></pre>
+</div>
+<p>We use the <code>partial_dependence</code> function from the <code>sklearn.inspection</code> module to compute partial dependence scores for one of the features, <code>bill_length_mm</code>. This will give us a sense of how the three class probabilities change as we vary the bill length, all else held equal.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> partial_dependence</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pd_data <span class="op">=</span> partial_dependence(model, X, [<span class="st">&quot;bill_length_mm&quot;</span>], kind<span class="op">=</span><span class="st">&quot;both&quot;</span>)</span></code></pre></div>
+</div>
+<p>At this point, we can visualize the CP curves. Each penguin has three lines below, one for each class. Classes are differentiated by color. As expected, when the bill length is lower, the probability of being an Adelie species is much higher – the top left has much more light green.</p>
+<p>I’ve hidden the code used to visualize them, because it is a bit more involved than everything else covered so far. That said, you can read the original source on the <a href="https://github.com/krisrs1128/winter_school_2021/blob/main/_posts/2021-12-15-session1-4/session1-4.Rmd">github page</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="session1-4_files/figure-html5/unnamed-chunk-12-1.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<p>To make the trends easier to read, we can also average the CP profiles to get the partial dependence profiles. This makes the relationship between beak length and species type clearer. Notice that for larger beak lengths, we put about 50% probability on either Chinstrap or Gentoo. This is consistent with what we’d observed in the original 2D plot – those penguin species have about the same beak lengths, just different beak depths. While that pattern was clear directly in this example, in situations with more features, this approach to visualizing model fits will help discover relationships that were unknown in advance.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="session1-4_files/figure-html5/unnamed-chunk-13-1.png" width="500" style="display: block; margin: auto;" /></p>
+</div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
