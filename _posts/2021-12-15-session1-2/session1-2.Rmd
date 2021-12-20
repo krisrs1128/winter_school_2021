@@ -150,6 +150,7 @@ we will be able to fit the response well. The reason is that, even though $y$ is
 not linear in $x$, it _is_ linear in the derived features $\mathbf{1}\left\{x > 0\right\}$ and $x^2$, respectively.
 
 9. This idea applies to all sorts of data, not just numerical columns,
+
 * Longitudinal measurements: Imagine we want to classify a patient's recovery
 probability based on a series of lab test results. We don't have to use the raw
 measurements, we can use the trend, the range, or the "spikiness," for example.

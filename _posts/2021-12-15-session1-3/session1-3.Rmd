@@ -18,7 +18,8 @@ opts_chunk$set(echo = FALSE, fig.align = "center", out.width = 500)
 ```
 
 1. Even if we can effectively draw curves through data, we might not actually be
-able to make good predictions on future samples. For example, suppose we fit this complicated curve to a training dataset,
+able to make good predictions on future samples. For example, suppose we fit
+this complicated curve to a training dataset,
 
 ```{r}
 include_graphics("figures/overfit-1.png")
@@ -106,9 +107,73 @@ cross-validation that are worth knowing,
   dataset.
 
 7. Let's implement both simple train / test and cross-validation using
-`sklearn`. Notice that training error is much lower than test error.
+`sklearn`. First, let's just use a train / test split, without cross-validating.
+We'll consider the penguins dataset from the earlier lecture.
 
-8. Related to overfitting, there is an important phenomenon called the
+```{python, echo = TRUE}
+from sklearn.model_selection import train_test_split
+import pandas as pd
+
+# prepare data
+penguins = pd.read_csv("https://uwmadison.box.com/shared/static/mnrdkzsb5tbhz2kpqahq1r2u3cpy1gg0.csv")
+penguins = penguins.dropna()
+X, y = penguins[["bill_length_mm", "bill_depth_mm"]], penguins["species"]
+(
+  X_train, X_test, 
+  y_train, y_test, 
+  indices_train, indices_test 
+) =  train_test_split(X, y, np.arange(len(X)), test_size=0.25)
+```
+
+Let's double check that the sizes of the train and test sets make sense.
+
+```{python, echo= TRUE}
+len(indices_train)
+len(indices_test)
+```
+
+Now, we'll train the model on just the training set. 
+
+```{python, echo= TRUE}
+from sklearn.ensemble import GradientBoostingClassifier
+
+model = GradientBoostingClassifier()
+model.fit(X_train, y_train)
+penguins["y_hat"] = model.predict(X)
+
+# keep track of which rows are train vs. test
+penguins["split"] = "train"
+penguins = penguins.reset_index()
+penguins.loc[list(indices_test), "split"] = "test"
+```
+
+Finally, we'll visualize to see the number of errors on either split. The first
+row are the test samples, the second row are the train samples. Notice that even
+though prediction on the training set is perfect, there are a few errors on the
+test set.
+
+```{r, echo = TRUE}
+ggplot(py$penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  scale_color_manual(values = c("#3DD9BC", "#6DA671", "#F285D5")) +
+  labs(x = "Bill Length", y = "Bill Depth") +
+  facet_grid(split ~ y_hat)
+```
+
+8. Next, let's look at cross validation. There is a handy wrapper function
+called `cross_val_score` in `sklearn` that handles all the splitting and looping
+for us. We just have to give it a model type and it will evaluate it on a few
+splits of the data. The `scores` vector below gives the error rate on $K = 5$
+holdout folds.
+
+```{python, echo = TRUE}
+from sklearn.model_selection import cross_val_score
+model_class = GradientBoostingClassifier()
+scores = cross_val_score(model_class, X, y, cv=5)
+scores
+```
+
+9. Related to overfitting, there is an important phenomenon called the
 bias-variance tradeoff. To understand this trade-off, imagine being able to
 sample hundreds of datasets similar to the one that is available. On each of
 these imaginary datasets, we can imagine training a new model (at a given
@@ -126,13 +191,14 @@ Ideally, we would have low values for both bias and variance, since they both
 contribute to performance on the test set. In practice, though, there is a
 trade-off. Often, the models that tend to be closest to the truth on average
 might be far off on any individual run. Conversely, models that are very stable
-from run to run might be consistenly incorrect in certain regions.
+from run to run might be consistently incorrect in certain regions.
 
 Models with high variance but low bias tend to be overfit, and models with low
 variance but high bias tend to be underfit. Models that have good test or
 cross-validation errors have found a good compromise between bias and variance.
 
 In practice, a useful strategy is to,
+
 * Try overfitting the data. This ensures that the features and / or model class are sufficiently rich. This provides a kind of upper bound on the possible performance with the current setup.
 * Try regularizing the overfit model so that it also performs well on holdout
 data.

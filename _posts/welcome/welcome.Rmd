@@ -13,7 +13,19 @@ output:
 
 ```{r, echo = FALSE}
 library(knitr)
+library(ggplot2)
+library(reticulate)
 opts_chunk$set(echo = FALSE, out.width = 500, fig.align = "center")
+theme424 <- theme_minimal() + 
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#f7f7f7"),
+    panel.border = element_rect(fill = NA, color = "#0c0c0c", size = 0.6),
+    axis.text = element_text(size = 14),
+    axis.title = element_text(size = 16),
+    legend.position = "bottom"
+  )
+theme_set(theme424)
 ```
 
 1. We are making predictions all the time, often without realizing it. For
@@ -201,13 +213,63 @@ we are using a Linear Regression model class. The second searches over
 coefficients $b$ to minimize the squared-error loss between $x^T b$ and $y$. The
 third line prints out the fitted coefficient $\hat{b}$.
 
-```{python}
+```{python, echo = TRUE}
 model = linear_model.LinearRegression()
 model.fit(X, y)
 model.coef_ # fitted b coefficients
 ```
 
-9. Let's do the same thing for a logistic regression.
+9. Let's do the same thing for a logistic regression. This time, we'll use the
+Palmer's Penguins dataset, which tries to classify penguins into one of three
+types based on their appearance. For example, two of the features are bill
+height and bill depth (figure from Allison Horst's `palmerspenguins`
+[package](https://allisonhorst.github.io/palmerpenguins/)).
+
+```{r}
+include_graphics("figures/penguin-features.png")
+```
+
+We'll read the data from a public link and print the first few rows.
+
+```{python, echo = TRUE}
+import pandas as pd
+
+penguins = pd.read_csv("https://uwmadison.box.com/shared/static/mnrdkzsb5tbhz2kpqahq1r2u3cpy1gg0.csv")
+penguins.head()
+```
+We'll predict `species` using just `bill` length and depth. First, let's make a
+plot to see how easy / difficult it will be to create a decision boundary.
+
+```{r, echo = TRUE}
+ggplot(py$penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  scale_color_manual(values = c("#3DD9BC", "#6DA671", "#F285D5")) +
+  labs(x = "Bill Length", y = "Bill Depth")
+```
+
+10. It seems like we should be able to draw nice boundaries between these
+classes. Let's fit the model.
+
+```{python, echo = TRUE}
+model = linear_model.LogisticRegression()
+penguins = penguins.dropna()
+X, y = penguins[["bill_length_mm", "bill_depth_mm"]], penguins["species"]
+model.fit(X, y)
+penguins["y_hat"] = model.predict(X)
+```
+The plot below compares the predicted class (left, middle, and right panels)
+with the true class (color). We get most of the samples correct, but have a few
+missclassifications near the boundaries.
+
+```{r, echo = TRUE}
+ggplot(py$penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  scale_color_manual(values = c("#3DD9BC", "#6DA671", "#F285D5")) +
+  labs(x = "Bill Length", y = "Bill Depth") +
+  facet_wrap(~ y_hat)
+```
+Exercise: Repeat this classification, but using at least two additional
+predictors.
 
 #### Sparse Linear Models
 
@@ -235,10 +297,39 @@ do not change at all as features $x_d$ is changed.
 include_graphics("figures/logistic-2d-sparse.png")
 ```
 
+12. To implement sparse linear regression using `sklearn`, we can use the
+`ElasticNet` class. We'll work with the Office dataset. The task is to predict
+the IMDB ratings for each episode based on which actors are in it and who the
+writers were.
 
-12. This is how we implement the approach in `sklearn`.
+```{python, echo = TRUE}
+office = pd.read_csv("https://uwmadison.box.com/shared/static/ab0opn7t8cagr1gj87ty94nomu5s347o.csv")
+office.head()
+X, y = office.iloc[:, 2:], office["imdb_rating"]
+y = (y - y.mean()) / y.std() # standardize
+```
+The block below fits the Elastic Net model and saves the coefficients $\hat{b}$.
+Notice that most of them are 0 -- only a few of the actors make a big difference
+in the rating.
 
-13. Here is an implementation in `sklearn`.
+```{python, echo = TRUE}
+model = linear_model.ElasticNet(alpha=1e-1, l1_ratio=0.5) # in real life, have to tune these parameters
+model.fit(X, y)
+y_hat = model.predict(X)
+
+beta_hat = model.coef_ # notice the sparsity
+beta_hat
+```
+
+We can confirm that the training error is quite good, though we will discuss
+later how to guard against potential overfitting.
+
+```{r, echo = TRUE}
+office <- data.frame(py$X, y = py$y, y_hat = py$y_hat)
+ggplot(office) +
+  geom_point(aes(y, y_hat)) +
+  labs(x = "True IMDB Rating", y = "Predicted IMDB Rating")
+```
 
 #### Tree-based Models
 
@@ -283,11 +374,35 @@ trees and then combines their curves in some way. How exactly they are combined
 is beyond the scope of these notes, but this is what random forests and gradient
 boosted decision trees are doing in the background.
 
-17. We can implement these models in `sklearn` using the following code.
+17. We can implement these models in `sklearn` using `RandomForestRegressor` /
+`RandomForestClassifier`, and `GradientBoostingRegressor` /
+`GradientBoostingClassifier`. Let's just see an example of a boosting classifier
+using the penguins dataset. The fitting / prediction code is very similar to
+
+```{python, echo = TRUE}
+from sklearn.ensemble import GradientBoostingClassifier
+model = GradientBoostingClassifier()
+X, y = penguins[["bill_length_mm", "bill_depth_mm"]], penguins["species"]
+model.fit(X, y)
+penguins["y_hat"] = model.predict(X)
+```
+
+We use the same visualization code to check predictions against the truth. The
+boosting classifier makes no mistakes on the training data.
+
+```{r, echo= TRUE}
+ggplot(py$penguins) +
+  geom_point(aes(bill_length_mm, bill_depth_mm, col = species)) +
+  scale_color_manual(values = c("#3DD9BC", "#6DA671", "#F285D5")) +
+  labs(x = "Bill Length", y = "Bill Depth") +
+  facet_wrap(~ y_hat)
+```
+
 
 ### Relationships across classes
 
-17. The diagram below summarizes the relationships across classes.
+17. The diagram below summarizes the relationships across elements of the model
+class.
 
 ```{r}
 include_graphics("figures/methods-relationships.png")
