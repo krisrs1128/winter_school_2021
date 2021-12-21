@@ -14,9 +14,22 @@ output:
 
 ```{r setup, include=FALSE}
 library(knitr)
+library(dplyr)
+library(purrr)
 library(reshape2)
 library(ggplot2)
 library(readr)
+library(reticulate)
+theme424 <- theme_minimal() + 
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.background = element_rect(fill = "#f7f7f7"),
+    panel.border = element_rect(fill = NA, color = "#0c0c0c", size = 0.6),
+    axis.text = element_text(size = 14),
+    axis.title = element_text(size = 16),
+    legend.position = "bottom"
+  )
+theme_set(theme424)
 opts_chunk$set(echo = FALSE, fig.align = "center", out.width = 500)
 ```
 
@@ -63,6 +76,10 @@ that the cast and writers were predictive of user ratings, but we never
 discussed which of the features were actually relevant. The block below refits the code we had from before.
 
 ```{python, echo = TRUE}
+import pandas as pd
+import numpy as np
+from sklearn import linear_model
+
 office = pd.read_csv("https://uwmadison.box.com/shared/static/ab0opn7t8cagr1gj87ty94nomu5s347o.csv")
 X, y = office.iloc[:, 2:-1], office["imdb_rating"]
 y = (y - y.mean()) / y.std() # standardize
