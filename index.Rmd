@@ -6,10 +6,10 @@ site: distill::distill_website
 listing: posts
 ---
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/krisrs1128/winter_school_code/HEAD?urlpath=rstudio)
-
 
 ## Learning Outcomes
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/krisrs1128/winter_school_code/HEAD?urlpath=rstudio)
 
 1. Given a problem description, determine features that may be relevant, including those directly present in the raw data and those that must be constructed.
 2. Given a problem description, determine an appropriate response variable.
