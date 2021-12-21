@@ -91,8 +91,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <!--  https://schema.org/Article -->
-<meta property="article:published" itemprop="datePublished" content="2021-12-20"/>
-<meta property="article:created" itemprop="dateCreated" content="2021-12-20"/>
+<meta property="article:published" itemprop="datePublished" content="2021-12-16"/>
+<meta property="article:created" itemprop="dateCreated" content="2021-12-16"/>
 <meta name="article:author" content="Kris Sankaran"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -109,7 +109,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","output","date"]}},"value":[{"type":"character","attributes":{},"value":["Setting Up Supervised Learning Probems"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Kris Sankaran"]},{"type":"character","attributes":{},"value":["https://krisrs1128.github.com/LSLab"]},{"type":"character","attributes":{},"value":["UW Madison"]},{"type":"character","attributes":{},"value":["https://stat.wisc.edu"]}]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["highlight","highlight_downlit","self_contained"]}},"value":[{"type":"character","attributes":{},"value":["pygments"]},{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["12-20-2021"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Setting Up Supervised Learning Probems"]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Kris Sankaran"]},{"type":"character","attributes":{},"value":["https://krisrs1128.github.com/LSLab"]},{"type":"character","attributes":{},"value":["UW Madison"]},{"type":"character","attributes":{},"value":["https://stat.wisc.edu"]}]}]},{"type":"character","attributes":{},"value":["12-16-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["highlight","highlight_downlit","self_contained"]}},"value":[{"type":"character","attributes":{},"value":["pygments"]},{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[false]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -2059,7 +2059,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Setting Up Supervised Learning Probems","authors":[{"author":"Kris Sankaran","authorURL":"https://krisrs1128.github.com/LSLab","affiliation":"UW Madison","affiliationURL":"https://stat.wisc.edu","orcidID":""}],"publishedDate":"2021-12-20T00:00:00.000+00:00","citationText":"Sankaran, 2021"}
+{"title":"Setting Up Supervised Learning Probems","authors":[{"author":"Kris Sankaran","authorURL":"https://krisrs1128.github.com/LSLab","affiliation":"UW Madison","affiliationURL":"https://stat.wisc.edu","orcidID":""}],"publishedDate":"2021-12-16T00:00:00.000+00:00","citationText":"Sankaran, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2091,7 +2091,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="d-byline">
   Kris Sankaran <a href="https://krisrs1128.github.com/LSLab" class="uri">https://krisrs1128.github.com/LSLab</a> (UW Madison)<a href="https://stat.wisc.edu" class="uri">https://stat.wisc.edu</a>
   
-<br/>12-20-2021
+<br/>12-16-2021
 </div>
 
 <div class="d-article">
@@ -2246,7 +2246,7 @@ f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(b^T x\right)}
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(bill_length_mm, bill_depth_mm, <span class="at">col =</span> species)) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#3DD9BC&quot;</span>, <span class="st">&quot;#6DA671&quot;</span>, <span class="st">&quot;#F285D5&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill Length&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill Depth&quot;</span>)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-16-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-15-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <ol start="11" type="1">
 <li>It seems like we should be able to draw nice boundaries between these classes. Let’s fit the model.</li>
@@ -2266,7 +2266,7 @@ f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(b^T x\right)}
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#3DD9BC&quot;</span>, <span class="st">&quot;#6DA671&quot;</span>, <span class="st">&quot;#F285D5&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill Length&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill Depth&quot;</span>) <span class="sc">+</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> y_hat)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-18-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-17-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <p>Exercise: Repeat this classification, but using at least two additional predictors.</p>
 <h4 id="sparse-linear-models">Sparse Linear Models</h4>
@@ -2323,7 +2323,7 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(office) <span class="sc">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, y_hat)) <span class="sc">+</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;True IMDB Rating&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Predicted IMDB Rating&quot;</span>)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-23-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-22-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <h4 id="tree-based-models">Tree-based Models</h4>
 <ol start="15" type="1">
@@ -2364,7 +2364,7 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#3DD9BC&quot;</span>, <span class="st">&quot;#6DA671&quot;</span>, <span class="st">&quot;#F285D5&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill Length&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill Depth&quot;</span>) <span class="sc">+</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> y_hat)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-28-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-27-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <h3 id="relationships-across-classes">Relationships across classes</h3>
 <ol start="19" type="1">
