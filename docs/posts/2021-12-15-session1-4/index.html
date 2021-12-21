@@ -2110,10 +2110,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <li>For tree-based models, there are no coefficients <span class="math inline">\(\hat{b}\)</span> to use for interpretation. Instead, it’s common to consider the variable importance statistic. The importance of a variable measures the deterioration in a model when that variable is removed. If the model deteriorates substantially, then that variable is said to be important.</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="figures/variable-importance.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="figures/variable-importance.png" width="650" style="display: block; margin: auto;" /></p>
 </div>
 <ol start="4" type="1">
-<li>Let’s see how we extract coefficients and variable importance measures in <code>sklearn.</code> First, we’ll revisit the Office prediction task. Earlier, we found that the cast and writers were predictive of user ratings, but we never discussed which of the features were actually relevant. The block below refits the code we had from before.</li>
+<li>Let’s see how we extract coefficients and variable importance measures in <code>sklearn.</code> First, we’ll revisit the Office prediction task. Earlier, we found that the cast and writers were predictive of user ratings, but we never discussed which of the features were actually relevant. The block below reruns the code we had from before.</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -2177,7 +2177,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <ol start="11" type="1">
 <li><p>To summarize a set of CP profiles, we can take their average across the dataset. This is called a partial dependence (PD) profile. It is a more concise alternative to CP profiles, showing one curve per features, rather than one curve per sample.</p></li>
-<li><p>We can visualize the CP profiles using the <code>plot_partial_dependence</code> function in <code>sklearn</code>. Let’s apply it to the gradient boosting classifier we used for the penguins dataset. The block below refits the gradient boosting model.</p></li>
+<li><p>We can visualize the CP profiles using the <code>partial_dependence</code> function in <code>sklearn</code>. Let’s apply it to the gradient boosting classifier we used for the penguins dataset. The block below refits the gradient boosting model.</p></li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingClassifier</span>
@@ -2190,7 +2190,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span></code></pre></div>
 <pre><code>GradientBoostingClassifier()</code></pre>
 </div>
-<p>We use the <code>partial_dependence</code> function from the <code>sklearn.inspection</code> module to compute partial dependence scores for one of the features, <code>bill_length_mm</code>. This will give us a sense of how the three class probabilities change as we vary the bill length, all else held equal.</p>
+<p>We now compute partial dependence scores for one of the features, <code>bill_length_mm</code>. This will give us a sense of how the three class probabilities change as we vary the bill length, all else held equal.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.inspection <span class="im">import</span> partial_dependence</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pd_data <span class="op">=</span> partial_dependence(model, X, [<span class="st">&quot;bill_length_mm&quot;</span>], kind<span class="op">=</span><span class="st">&quot;both&quot;</span>)</span></code></pre></div>

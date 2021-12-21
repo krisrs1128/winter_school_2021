@@ -114,7 +114,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["figures/class-1d.ai","figures/class-1d.png","figures/class-2d.ai","figures/class-2d.png","figures/curve-1d.ai","figures/curve-1d.png","figures/curve-2d.ai","figures/curve-2d.png","figures/decision-tree-stump-2d.ai","figures/decision-tree-stump-2d.png","figures/decision-tree-stump.ai","figures/decision-tree-stump.png","figures/decision-tree-traffic.ai","figures/decision-tree-traffic.png","figures/linear-1d-sparse.ai","figures/linear-1d-sparse.png","figures/linear-1d.ai","figures/linear-1d.png","figures/linear-2d.ai","figures/linear-2d.png","figures/logistic-2d-arrow.png","figures/logistic-2d-sparse.ai","figures/logistic-2d-sparse.png","figures/logistic-2d.ai","figures/logistic-2d.png","figures/logx.png","figures/methods-relationships.ai","figures/methods-relationships.png","figures/need-to-rescale.ai","figures/penguin-features.png","welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/figure-html5/unnamed-chunk-101-1.png","welcome_files/figure-html5/unnamed-chunk-106-1.png","welcome_files/figure-html5/unnamed-chunk-15-1.png","welcome_files/figure-html5/unnamed-chunk-17-1.png","welcome_files/figure-html5/unnamed-chunk-22-1.png","welcome_files/figure-html5/unnamed-chunk-27-1.png","welcome_files/figure-html5/unnamed-chunk-29-1.png","welcome_files/figure-html5/unnamed-chunk-31-1.png","welcome_files/figure-html5/unnamed-chunk-36-1.png","welcome_files/figure-html5/unnamed-chunk-41-1.png","welcome_files/figure-html5/unnamed-chunk-94-1.png","welcome_files/figure-html5/unnamed-chunk-96-1.png","welcome_files/header-attrs-2.8/header-attrs.js","welcome_files/jquery-1.11.3/jquery.min.js","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["figures/class-1d.ai","figures/class-1d.png","figures/class-2d.ai","figures/class-2d.png","figures/curve-1d.ai","figures/curve-1d.png","figures/curve-2d.ai","figures/curve-2d.png","figures/decision-tree-stump-2d.ai","figures/decision-tree-stump-2d.png","figures/decision-tree-stump.ai","figures/decision-tree-stump.png","figures/decision-tree-traffic.ai","figures/decision-tree-traffic.png","figures/linear-1d-sparse.ai","figures/linear-1d-sparse.png","figures/linear-1d.ai","figures/linear-1d.png","figures/linear-2d.ai","figures/linear-2d.png","figures/logistic-2d-arrow.png","figures/logistic-2d-sparse.ai","figures/logistic-2d-sparse.png","figures/logistic-2d.ai","figures/logistic-2d.png","figures/logx.png","figures/methods-relationships.ai","figures/methods-relationships.png","figures/need-to-rescale.ai","figures/penguin-features.png","welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/figure-html5/unnamed-chunk-101-1.png","welcome_files/figure-html5/unnamed-chunk-106-1.png","welcome_files/figure-html5/unnamed-chunk-15-1.png","welcome_files/figure-html5/unnamed-chunk-16-1.png","welcome_files/figure-html5/unnamed-chunk-17-1.png","welcome_files/figure-html5/unnamed-chunk-18-1.png","welcome_files/figure-html5/unnamed-chunk-22-1.png","welcome_files/figure-html5/unnamed-chunk-23-1.png","welcome_files/figure-html5/unnamed-chunk-27-1.png","welcome_files/figure-html5/unnamed-chunk-28-1.png","welcome_files/figure-html5/unnamed-chunk-29-1.png","welcome_files/figure-html5/unnamed-chunk-31-1.png","welcome_files/figure-html5/unnamed-chunk-36-1.png","welcome_files/figure-html5/unnamed-chunk-41-1.png","welcome_files/figure-html5/unnamed-chunk-94-1.png","welcome_files/figure-html5/unnamed-chunk-96-1.png","welcome_files/header-attrs-2.8/header-attrs.js","welcome_files/jquery-1.11.3/jquery.min.js","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2145,7 +2145,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <h3 id="model-classes">Model Classes</h3>
 <ol start="5" type="1">
-<li>Drawing curves and boundaries sounds simple, but is a surprisingly difficult problem, especially when the number of potentially informative features <span class="math inline">\(D\)</span> is large. It helps to have predefined types of curves (and boundaries) that we can refer to and use to partially automate the process of supervised learning. We’ll call an example of these predefined curve types a “model class.” In later notes, we’ll discuss how exactly to choose one member of each model class that fits a dataset well. For now, let’s just build some intuition about what each model class looks like and how we might be able to fit it with data.</li>
+<li>Drawing curves and boundaries sounds simple, but is a surprisingly difficult problem, especially when the number of potentially informative features <span class="math inline">\(D\)</span> is large. It helps to have predefined types of curves (and boundaries) that we can refer to and use to partially automate the process of supervised learning. We’ll call an example of these predefined curve types a “model class.” Let’s just build some intuition about what each model class looks like and how we might be able to fit it with data.</li>
 </ol>
 <h4 id="linear-models">Linear Models</h4>
 <ol start="6" type="1">
@@ -2175,13 +2175,13 @@ L\left(b\right) = \sum_{i = 1}^{N} \left(y_i - b^{T}x_{i}\right)^2.
 <p><img src="figures/logistic-2d.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <p>To describe this, we need to define a direction <span class="math inline">\(b\)</span> perpendicular to the boundary. We will say that whenever <span class="math display">\[\begin{align*}
-f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(x^{T}b\right)}
-\end{align*}\]</span> is larger than 0.5, we’re in the orange region, and whenever it’s smaller than 0.5, we’re in the purple region. This kind of model is called a <em>logistic regression model</em>.</p>
+f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(b^T x\right)}
+\end{align*}\]</span> is larger than 0.5, we’re in the red region, and whenever it’s smaller than 0.5, we’re in the purple region. This kind of model is called a <em>logistic regression model</em>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="figures/logistic-2d-arrow.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <ol start="9" type="1">
-<li>We need a loss function for logistic regression too. In theory, we could continue to use squared error loss, but we can do better by considering the fact that the true response is only one of two values. To make things concrete, say that <span class="math inline">\(y_i = 1\)</span> whenever it is an orange point, otherwise <span class="math inline">\(y_i = 0\)</span>. We can use binary cross-entropy loss,</li>
+<li>We need a loss function for logistic regression too. In theory, we could continue to use squared error loss, but we can do better by considering the fact that the true response is only one of two values. To make things concrete, say that <span class="math inline">\(y_i = 1\)</span> whenever it is an red point, otherwise <span class="math inline">\(y_i = 0\)</span>. We can use binary cross-entropy loss,</li>
 </ol>
 <p><span class="math display">\[\begin{align*}
 -\left[\sum_{i = 1}^{N} y_i \log\left(f_{b}\left(x_i\right)\right) + \left(1 - y_i\right) \log\left(1 - f_{b}\left(x_i\right)\right)\right]
@@ -2190,9 +2190,9 @@ f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(x^{T}b\right)}
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="figures/logx.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
-<p>If 1 is predicted with probability 1, then there is no loss (and conversely for 0). The loss increases the further we are from the truth.</p>
+<p>If 1 is predicted with probability 1, then there is no loss (and conversely for 0). The loss increases the further the predicted probability is from the true class.</p>
 <ol start="9" type="1">
-<li>Let’s fit a linear regression in code. Below, I’m loading a dataset about diabetes disease progression. The response <span class="math inline">\(y\)</span> is disease severity one year after diagnosis, it ranges from 25 (low severity) to 246 (high severity). There are <span class="math inline">\(D = 10\)</span> numeric predictors; below I print 4 samples corresponding to the first 5.</li>
+<li>Let’s fit a linear regression in code. Below, I’m loading a dataset about diabetes disease progression. The response <span class="math inline">\(y\)</span> is disease severity one year after diagnosis, it ranges from 25 (low severity) to 246 (high severity). There are <span class="math inline">\(D = 10\)</span> numeric predictors; below I print 4 samples corresponding to the first 5 features.</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -2209,7 +2209,7 @@ f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(x^{T}b\right)}
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y[:<span class="dv">4</span>] <span class="co"># example response</span></span></code></pre></div>
 <pre><code>array([151.,  75., 141., 206.])</code></pre>
 </div>
-<p>Let’s now fit a linear model from <span class="math inline">\(X\)</span> to <span class="math inline">\(y\)</span>. The first line tells python that we are using a Linear Regression model class. The second searches over coefficients <span class="math inline">\(b\)</span> to minimize the squared-error loss between <span class="math inline">\(x^T b\)</span> and <span class="math inline">\(y\)</span>. The third line prints out the fitted coefficient <span class="math inline">\(\hat{b}\)</span>.</p>
+<p>Let’s now fit a linear model from <span class="math inline">\(\mathbf{x}_1, \dots, \mathbf{x}_{N}\)</span> to <span class="math inline">\(y\)</span>. The first line tells python that we are using a <code>LinearRegression</code> model class. The second searches over coefficients <span class="math inline">\(b\)</span> to minimize the squared-error loss between the <span class="math inline">\(b^T x_i\)</span> and <span class="math inline">\(y_i\)</span>. The third line prints out the fitted coefficient <span class="math inline">\(\hat{b}\)</span>.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> linear_model.LinearRegression()</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model.fit(X, y)</span></code></pre></div>
@@ -2246,7 +2246,7 @@ f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(x^{T}b\right)}
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(bill_length_mm, bill_depth_mm, <span class="at">col =</span> species)) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#3DD9BC&quot;</span>, <span class="st">&quot;#6DA671&quot;</span>, <span class="st">&quot;#F285D5&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill Length&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill Depth&quot;</span>)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-15-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-16-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <ol start="11" type="1">
 <li>It seems like we should be able to draw nice boundaries between these classes. Let’s fit the model.</li>
@@ -2266,12 +2266,12 @@ f_{b}\left(x\right) = \frac{1}{1 + \text{exp}\left(x^{T}b\right)}
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#3DD9BC&quot;</span>, <span class="st">&quot;#6DA671&quot;</span>, <span class="st">&quot;#F285D5&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill Length&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill Depth&quot;</span>) <span class="sc">+</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> y_hat)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-17-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-18-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <p>Exercise: Repeat this classification, but using at least two additional predictors.</p>
 <h4 id="sparse-linear-models">Sparse Linear Models</h4>
 <ol start="12" type="1">
-<li>In many cases, we will have recorded many types of features – coordinates of <span class="math inline">\(x_{i}\)</span> – that are not actually related to the response. A model that knows to ignore certain of the features will do better than a model that tries to use all of them. This is the main idea behind using sparsity in linear regression. We again fit the model <span class="math display">\[\begin{align*}
+<li>In many cases, we will have recorded many types of features – coordinates of <span class="math inline">\(x_{i}\)</span> – that are not actually related to the response. A model that knows to ignore irrelevant features will do better than a model that tries to use all of them. This is the main idea behind using sparsity in linear regression. We again fit the model <span class="math display">\[\begin{align*}
 f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 \end{align*}\]</span> but we make the assumption that many of the <span class="math inline">\(b_{d}\)</span> are exactly 0. Graphically, we imagine that the response does not change at all as we change some of the inputs, all else held equal.</li>
 </ol>
@@ -2285,7 +2285,7 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <p><img src="figures/logistic-2d-sparse.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <ol start="14" type="1">
-<li>To implement sparse linear regression using <code>sklearn</code>, we can use the <code>ElasticNet</code> class. We’ll work with the Office dataset. The task is to predict the IMDB ratings for each episode based on which actors are in it and who the writers were.</li>
+<li>To implement sparse linear regression using <code>sklearn</code>, we can use the <code>ElasticNet</code> class. We’ll work with The Office dataset (as in, the TV series, The Office). The task is to predict the IMDB ratings for each episode based on how often certain actors / writers appeared in it and also who the episode writers were.</li>
 </ol>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>office <span class="op">=</span> pd.read_csv(<span class="st">&quot;https://uwmadison.box.com/shared/static/ab0opn7t8cagr1gj87ty94nomu5s347o.csv&quot;</span>)</span>
@@ -2323,7 +2323,7 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(office) <span class="sc">+</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(y, y_hat)) <span class="sc">+</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;True IMDB Rating&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Predicted IMDB Rating&quot;</span>)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-22-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-23-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <h4 id="tree-based-models">Tree-based Models</h4>
 <ol start="15" type="1">
@@ -2332,7 +2332,7 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="figures/decision-tree-traffic.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
-<p>Notice that we can use the same logic to do either regression or classification. For regression, we associate each “leaf” at the bottom of the tree with a continuous prediction. For classification, we associate it with the probability for different classes. It turns out that we can train these models using squared error and cross-entropy losses as before, though the details are beyond the scope of these notes.</p>
+<p>Notice that we can use the same logic to do either regression or classification. For regression, we associate each “leaf” at the bottom of the tree with a continuous prediction. For classification, we associate leaves with probabilities for different classes. It turns out that we can train these models using squared error and cross-entropy losses as before, though the details are beyond the scope of these notes.</p>
 <ol start="16" type="1">
 <li>It’s not immediately obvious, but these rules are equivalent to drawing curves that are piecewise constant over subsets of the input space. Let’s convince ourselves using some pictures. First, notice that a tree with a single split is exactly a “curve” that takes on two values, depending on the split point,</li>
 </ol>
@@ -2364,7 +2364,7 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#3DD9BC&quot;</span>, <span class="st">&quot;#6DA671&quot;</span>, <span class="st">&quot;#F285D5&quot;</span>)) <span class="sc">+</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Bill Length&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Bill Depth&quot;</span>) <span class="sc">+</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> y_hat)</span></code></pre></div>
-<p><img src="welcome_files/figure-html5/unnamed-chunk-27-1.png" width="500" style="display: block; margin: auto;" /></p>
+<p><img src="welcome_files/figure-html5/unnamed-chunk-28-1.png" width="500" style="display: block; margin: auto;" /></p>
 </div>
 <h3 id="relationships-across-classes">Relationships across classes</h3>
 <ol start="19" type="1">
@@ -2392,7 +2392,7 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <tbody>
 <tr class="odd">
 <td>Linear / Logistic Regression</td>
-<td>* Often to easy interpret<br>* No tuning parameters<br>* Very fast to train</td>
+<td>* Often easy to interpret<br>* No tuning parameters<br>* Very fast to train</td>
 <td>* Unstable when many features to pick from<br>* Can only fit linear curves / boundaries (though, see featurization notes)</td>
 </tr>
 <tr class="even">
@@ -2411,8 +2411,8 @@ f_{b}\left(x\right) = b_0 + b_1 x_1 + \dots + b_{D}x_{D} := b^{T}x,
 <li>Try matching models to responses in the examples below,</li>
 </ol>
 <ul>
-<li>Q1: We want to predict whether a patient has a disease given just the genetic profile. There are 1000 genes that can serve as predictors. There are only two possible responses.</li>
-<li>Q2: A user on a site has been watching (too many…) episodes of Doctor Who. How many more minutes will they remain on the site today? As predictors, you have their features of their current and past viewing behavior (e.g., current time of day, number of hours per week for each of the last 4 weeks, etc.). We suspect that there are important nonlinear relationships between these predictors and the response.</li>
+<li>Q1: We want to predict whether a patient has a disease given just their genetic profile. There are 1000 genes that can serve as predictors. There are only two possible responses.</li>
+<li>Q2: A user on a site has been watching (too many…) episodes of Doctor Who. How many more minutes will they remain on the site today? As predictors, you have features of their current and past viewing behavior (e.g., current time of day, number of hours on the site per week for each of the last 4 weeks, etc.). We suspect that there are important nonlinear relationships between these predictors and the response.</li>
 <li>Q3: We are trying to predict the next hour’s total energy production in a wind farm. We have a years worth of past production and weather data, but right now, we just want a baseline using current wind speed and the last hour’s production.</li>
 </ul>
 <p>The answers are,</p>

@@ -2030,7 +2030,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <div class="d-article">
 <ol type="1">
-<li><p>A few simple improvements to the quality of a dataset can make a bigger impact in downstream modeling performance than even the most extensive search across the fanciest models. For this reason, in real-world modeling (not to mention machine learning competitions), significant time is dedicated to data exploration and preprocessing<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> In these notes, we’ll review some of the most common dataset transformations we should consider before simply throwing it into a model.</p></li>
+<li><p>A few simple improvements to the quality of a dataset can make a bigger impact in downstream modeling performance than even the most extensive search across the fanciest models. For this reason, in real-world modeling (not to mention machine learning competitions), significant time is dedicated to data exploration and preprocessing<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In these notes, we’ll review some of the most common transformations we should consider for a dataset before simply throwing it into a model.</p></li>
 <li><p>First, a caveat: Never overwrite the raw data! Instead, write a workflow that transforms the raw data into a preprocessed form. This makes it possible to try a few different transformations and see how the resulting performances compare. Also, we want to have some confidence that the overall analysis is reproducible, and if we make irreversible changes to the raw data, then that becomes impossible.</p></li>
 </ol>
 <h3 id="preprocessing">Preprocessing</h3>
@@ -2105,7 +2105,7 @@ x  &amp; x^2
 x  &amp; \mathbf{1}\left\{x &gt; 0\right\}
 \end{pmatrix}
 \end{align*}\]</span></p>
-<p>we will be able to fit the response well. The reason is that, even though <span class="math inline">\(y\)</span> is not linear in <span class="math inline">\(x\)</span>, it <em>is</em> linear in the derived features <span class="math inline">\(\mathbf{1}\left\{x &gt; 0\right\}\)</span> and <span class="math inline">\(x^2\)</span>, respectively.</p>
+<p>we will be able to fit the response well. The reason is that, even though <span class="math inline">\(y\)</span> is not linear in <span class="math inline">\(x\)</span>, it <em>is</em> linear in the derived features <span class="math inline">\(x^2\)</span> and <span class="math inline">\(\mathbf{1}\left\{x &gt; 0\right\}\)</span>, respectively.</p>
 <ol start="9" type="1">
 <li>This idea applies to all sorts of data, not just numerical columns,</li>
 </ol>
